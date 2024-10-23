@@ -155,11 +155,6 @@ public class CourseProject1 {
 
     /* Matrix Operations Starts Here */
 
-    public static double[][] Transpose(double[][] matrix)
-    {
-        return matrix;
-    }
-
     public static void MatrixOperations(Scanner input)
     {
         ClearTheTerminal();
@@ -173,62 +168,16 @@ public class CourseProject1 {
         for (String line : asciiArt) {
             System.out.println(line);
         }
-
-        System.out.println("\n\nWith this application you can use some matrix operations.");
-        int userInput;
-
-        do
-        {
-            System.out.println("1 - Transpose");
-            System.out.println("2 - Inverse");
-            System.out.println("3 - Matrix Multiplication");
-            System.out.println("4 - Element-wise Multiplication");
-            System.out.println("5 - Return to the Main Menu\n");
-
-            System.out.print("Please choose an application: ");
-            userInput = input.nextInt();
-
-            if(userInput > 5 || userInput < 0)
-            {
-                System.out.println("Please enter a valid number (1 - 5).");
-            }
-
-            else
-            {
-                switch(userInput)
-                {
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4: 
-                        break;
-                    case 5:
-                        break;
-
-                }
-            }
-
-
-        } while(userInput > 5 || userInput < 0);
-
     }
     
     /* Matrix Operations Ends Here */
 
     public static void TextEncryptionDescription(Scanner input)
     {
-        try {
-            // Execute the clear command for Windows
-            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ClearTheTerminal();
+        
         System.out.println("Welcome to Text Encrytion");
     }
-    
 
 
     /* Tic Tac Toe Starts Here */
