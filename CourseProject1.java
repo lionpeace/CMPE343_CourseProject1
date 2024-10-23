@@ -1,3 +1,5 @@
+// COURSE PROJECT #1 - GROUP 6
+
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -83,7 +85,7 @@ public class CourseProject1 {
             System.out.println(line);
         }
 
-        System.out.println("\n\nWith this application you can find a median, arithmetic mean, geometric mean, and harmonic mean of array that you created.");
+        System.out.println("\n\nWith this application you can find a median, arithmetic mean, geometric mean, and harmonic mean of array that you created. ");
         System.out.println("You will define the size of array that you want to create and fill it with the double numbers.");
 
         int sizeOfArray = 0;
