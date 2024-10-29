@@ -156,22 +156,22 @@ public class CourseProject1 {
     /* Matrix Operations Starts Here */
     
     // Satır ve sütun boyutları positive integer olmalı. Kullanıcıdan dimension alırken bu kontrolü yapması için metod:
-    private static int getValidIntegerInput() {
+    private static int getValidIntegerInput(String text) {
         Scanner scanner = new Scanner(System.in);
         int input = -1; 
         while (true) {
-            System.out.print("Please enter a positive integer: ");
+            System.out.print("(positive integer): ");
             if (scanner.hasNextInt()) {
                 input = scanner.nextInt();
                 if (input > 0) {
                     break;
                 } else {
                     ClearTheTerminal();
-                    System.out.println("Error!! Input must be bigger than zero.");
+                    System.out.println("Error!! Number of "+ text +" must be bigger than zero. Please re-enter "+text+".");
                 }
             } else {
                 ClearTheTerminal();
-                System.out.println("Error!! Input must be an integer and a numeric value. ");
+                System.out.println("Error!! Number of "+ text +" must be an integer and a numeric value. Please re-enter "+text+".");
                 scanner.next(); 
             }
         }
@@ -179,83 +179,35 @@ public class CourseProject1 {
     }
 
     // Matrix elementleri double değer veya numeric bir değer olmalı. Bu kontrolü sağlaması için metod:
-    private static double getValidDoubleInput() {
+    private static double getValidDoubleInput(int i, int j) {
         Scanner scanner = new Scanner(System.in);
         while (!scanner.hasNextDouble()) {
-            System.out.println("Invalid input. Please enter a numeric value (Use comma for double values).");
+            ClearTheTerminal();
+            System.out.println("Error!! Input must be a numeric value (use comma for double values).");
+            Delay();
+            System.out.println("\nPlease re-enter the value for element ["+i+"]["+j+"]:");
             scanner.next();
         }
         return scanner.nextDouble();
     }
 
-    // Square matisler için rows == columns olmalı. Bu kontrolu dışarıda yapar. Sağlanırsa parametre olarak göndererek direkt elementleri isteyen metod:
-    private static double[][] getSquareMatrixElements(int rows, int columns) {
-        ClearTheTerminal();
+    // Rows, columns değerlerini parametre olarak alır. Ardından matris elementlerini getValidDoubleInput metodunu çağırarak alır.
+    private static double[][] getMatrixElements(int rows, int columns) {
 
         double[][] matrix = new double[rows][columns];
-        System.out.println("Enter matrix elements:");
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                System.out.println("Enter element for [" + i + "][" + j + "]");
-                matrix[i][j] = getValidDoubleInput();
+                System.out.println("Enter element for [" + i + "][" + j + "]:");
+                matrix[i][j] = getValidDoubleInput(i, j);
             }
         }
         return matrix;
     }
 
-    // rows columns değerlerini kullanıcıdan metod içinde alır. Ardından matris elementlerini getValidDoubleInput metodunu çağırarak alır.
-    private static double[][] getMatrixElements() {
-        ClearTheTerminal();
-        System.out.print("Enter number of rows: ");
-        int rows = getValidIntegerInput();
-        System.out.print("Enter number of columns: ");
-        int columns = getValidIntegerInput();
-
-        double[][] matrix = new double[rows][columns];
-        System.out.println("Enter matrix elements:");
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                System.out.println("Enter element for [" + i + "][" + j + "]");
-                matrix[i][j] = getValidDoubleInput();
-            }
-        }
-        return matrix;
-    }
-
-    // rows columns'a eşit mi kontrol eder (square matrix). Eğer eşitse matrix elementlerini getSquareMatrixElements metodunu çağırarak alır.
-    private static double[][] getSquareMatrixInput() {
-
-        double[][] matrix;
-        while(true){
-            System.out.print("Enter number of rows: ");
-            int rows = getValidIntegerInput();
-            System.out.print("Enter number of columns: ");
-            int columns = getValidIntegerInput();
-            if (rows == columns){
-                matrix = getSquareMatrixElements(rows, columns);
-                return matrix;
-            }
-            else{
-                ClearTheTerminal();
-                System.out.println("rows and columns should be same in order matrix to be square matrix. Please re-enter sizes");
-            }
-        }
-        
-    }
-
-    // Check if matrix is singular (determinant == 0) (Inverse işlemi için gerekli)
+    // Singularity kontrolü yapar (determinant == 0) (Inverse işlemi için gerekli)
     private static boolean isSingular(double[][] matrix) {
         double determinant = calculateDeterminant(matrix);
         return determinant == 0;
-    }
-
-    public static void printMatrix(double[][] matrix) {
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[0].length; j++) {
-                System.out.print(matrix[i][j] + " ");
-            }
-            System.out.println();
-        }
     }
 
     private static double[][] minor(double[][] matrix, int row, int column) {
@@ -280,7 +232,15 @@ public class CourseProject1 {
     public static double calculateCofactor(double[][] matrix, int row, int col) {
         double signCheck = Math.pow(-1, (row+col));
         return signCheck * calculateDeterminant( minor(matrix, row, col) );
+    }
 
+    public static void printMatrix(double[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                System.out.printf("%.2f ", matrix[i][j]);
+            }
+            System.out.println();
+        }
     }
 
     private static void pressAnyKeyToContinue() {
@@ -291,6 +251,7 @@ public class CourseProject1 {
     }
 
 
+    // Main operations:
     private static double[][] transpose(double[][] matrix) {
         int rows = matrix.length;
         int columns = matrix[0].length;
@@ -333,23 +294,22 @@ public class CourseProject1 {
 
     private static double[][] multiplyMatrices() {
 
-        ClearTheTerminal();
         while(true){
-            System.out.println("Please enter dimensions for the first matrix:");
-            System.out.print("Enter number of rows for the first matrix. ");
-            int rows1 = getValidIntegerInput();
+            System.out.println("Please enter dimensions for the first matrix.");
+            System.out.print("Enter number of rows for the first matrix ");
+            int rows1 = getValidIntegerInput("rows");
 
-            System.out.print("Enter number of columns for the first matrix. ");
-            int cols1 = getValidIntegerInput();
+            System.out.print("Enter number of columns for the first matrix ");
+            int cols1 = getValidIntegerInput("columns");
 
             ClearTheTerminal();
 
             System.out.println("Dimensions for the first matrix is ("+rows1+"x"+cols1+"). Please enter dimensions for the second matrix. ");
-            System.out.print("Enter number of rows for the second matrix. ");
-            int rows2 = getValidIntegerInput();
+            System.out.print("Enter number of rows for the second matrix ");
+            int rows2 = getValidIntegerInput("rows");
 
-            System.out.print("Enter number of columns for the second matrix. ");
-            int cols2 = getValidIntegerInput();
+            System.out.print("Enter number of columns for the second matrix ");
+            int cols2 = getValidIntegerInput("columns");
 
             ClearTheTerminal();
             if (cols1 == rows2){
@@ -358,7 +318,7 @@ public class CourseProject1 {
                 for (int i = 0; i < rows1; i++) {
                     for (int j = 0; j < cols1; j++) {
                         System.out.println("Enter element for [" + i + "][" + j + "]");
-                        matrix1[i][j] = getValidDoubleInput();
+                        matrix1[i][j] = getValidDoubleInput(i,j);
                     }
                 }
 
@@ -368,7 +328,7 @@ public class CourseProject1 {
                 for (int i = 0; i < rows2; i++) {
                     for (int j = 0; j < cols2; j++) {
                         System.out.println("Enter element for [" + i + "][" + j + "]");
-                        matrix2[i][j] = getValidDoubleInput();
+                        matrix2[i][j] = getValidDoubleInput(i,j);
                     }
                 }
                 
@@ -385,7 +345,7 @@ public class CourseProject1 {
 
             } else{
                 ClearTheTerminal();
-                System.out.println("Matrix dimensions do not match for multiplication.\nColumn size of the first matrix and row size of the second matrix should be same. ");
+                System.out.println("Matrix dimensions do not match for multiplication.\nColumn size of the first matrix and row size of the second matrix should be same. \n");
             }
         }
     }
@@ -423,7 +383,7 @@ public class CourseProject1 {
             int operationSelection = 0;
 
             // Seçim Menüsü
-            System.out.println("1 - Transpose");
+            System.out.println("\n1 - Transpose");
             System.out.println("2 - Determinant");
             System.out.println("3 - Inverse");
             System.out.println("4 - Matrix Multiplication");
@@ -434,8 +394,9 @@ public class CourseProject1 {
             try {
                 operationSelection = var0.nextInt();
             } catch (InputMismatchException e) {
+                ClearTheTerminal();
                 System.out.println("Error! Please enter a valid number (1-6).");
-                var0.next(); // hatalı girdiyi temizle
+                var0.next(); 
                 continue;
             }
 
@@ -445,12 +406,27 @@ public class CourseProject1 {
             double[][] matrix1;
             double[][] matrix2;
             double[][] result;
+            int rows;
+            int columns;
 
             switch (operationSelection) {
                 case 1:
                     // TRANSPOSE
 
-                    matrix = getMatrixElements();
+                    System.out.println("The transpose of a matrix is formed by swapping its rows and columns, turning row indices into column indices and vice versa.");
+                    System.out.println("First, we will ask for the dimensions of the matrix you want to transpose. Then, we will request the elements of the matrix with the dimensions you provided.\n\n");
+
+                    Delay();
+
+                    System.out.print("Enter number of rows ");
+                    rows = getValidIntegerInput("rows");
+                    System.out.print("Enter number of columns ");
+                    columns = getValidIntegerInput("columns");
+
+                    ClearTheTerminal();
+                    System.out.print("The dimensions of the matrix are ("+rows+" x "+ columns +").\n\n");
+
+                    matrix = getMatrixElements(rows, columns);
                     double[][] transposed = transpose(matrix);
 
                     ClearTheTerminal();
@@ -465,12 +441,35 @@ public class CourseProject1 {
                 case 2:
                     // DETERMINANT
 
-                    matrix = getSquareMatrixInput();
-                    double determinant = calculateDeterminant(matrix);
+                    double determinant;
+
+                    System.out.println("The determinant is a scalar value that is a function of a square matrix, providing important information about the matrix, such as whether it is invertible.");
+                    System.out.println("First, we will ask for the dimensions of the matrix you want to transpose. Then, we will request the elements of the matrix with the dimensions you provided.\n\n");
+                    System.out.println("Note that, a square matrix is a matrix that has the same number of rows and columns, meaning it has the dimensions nxn for some integer n.\n\n");
+
+                    Delay();
+
+                    while(true){
+                        System.out.print("Enter number of rows ");
+                        rows = getValidIntegerInput("rows");
+                        System.out.print("Enter number of columns ");
+                        columns = getValidIntegerInput("columns");
+                        if (rows == columns){
+                            ClearTheTerminal();
+                            System.out.print("The dimensions of the matrix are ("+rows+" x "+ columns +").\n\n");
+                            matrix = getMatrixElements(rows, columns);
+                            determinant = calculateDeterminant(matrix);
+                            break;
+                        }
+                        else{
+                            ClearTheTerminal();
+                            System.out.println("Error!! Number of rows and columns should be same in order matrix to be square matrix. Please re-enter sizes.\n");
+                        }
+                    }
 
                     ClearTheTerminal();
 
-                    System.out.println("Transpose of the given matrix is ... \n");
+                    System.out.println("Determinant of the given matrix is ... \n");
                     Delay();
 
                     System.out.println(determinant);
@@ -480,18 +479,39 @@ public class CourseProject1 {
                 case 3:
                     // INVERSE
 
-                    matrix = getSquareMatrixInput();
-                    if (isSingular(matrix)) {
-                        double[][] inverse = calculateInverse(matrix);
-                        printMatrix(inverse);
+                    double[][] inverse;
+                    while(true){
+                        System.out.print("Enter number of rows ");
+                        rows = getValidIntegerInput("rows");
+                        System.out.print("Enter number of columns ");
+                        columns = getValidIntegerInput("columns");
+                        if (rows == columns){
+                            matrix = getMatrixElements(rows, columns);
+                            inverse = calculateInverse(matrix);
+                            break;
+                        }
+                        else{
+                            ClearTheTerminal();
+                            System.out.println("rows and columns should be same in order matrix to be square matrix. Please re-enter sizes");
+                        }
                     }
+                    ClearTheTerminal();
 
+                    System.out.println("Inverse of the given matrix is ... \n");
+                    Delay();
+
+                    printMatrix(inverse);
                     pressAnyKeyToContinue();
 
                     break;
                 case 4:
                     // MULTIPLICATION
                 
+                    System.out.println("Matrix multiplication is an operation that takes two matrices and produces a new matrix by multiplying the rows of the first matrix by the columns of the second matrix,\nfollowing specific rules of alignment.");
+                    System.out.println("First, we will ask for the dimensions of each matrix, and then we will request the elements within each matrix.\n");
+                    System.out.println("Note that, for matrix multiplication to be valid, the number of columns in the first matrix must equal the number of rows in the second matrix.\n\n");
+                    Delay();
+
                     result = multiplyMatrices();
 
                     ClearTheTerminal();
@@ -504,12 +524,47 @@ public class CourseProject1 {
 
                     break;
                 case 5:
+                    // ELEMENT-WISE MULTIPLICATION
 
-                    matrix1 = getSquareMatrixInput();
-                    matrix2 = getSquareMatrixInput();
-                    result = elementWiseMultiplication(matrix1, matrix2);
+                    System.out.println("Element-wise multiplication is the operation of multiplying each element of two matrices or arrays of the same size by the corresponding element in the other.");
+                    System.out.println("First, we will ask for the dimensions of each matrix, and then we will request the elements within each matrix.\n\n");
+                    Delay();
+                    int rows1;
+                    int rows2;
+                    int cols1;
+                    int cols2;
 
-                    System.out.println("Performing element-wise multiplication...");
+                    while(true){
+                        System.out.print("Enter number of rows for the first matrix\n");
+                        rows1 = getValidIntegerInput("rows");
+                        System.out.print("Enter number of columns for the second matrix:\n");
+                        cols1 = getValidIntegerInput("columns");
+    
+                        System.out.print("\nEnter number of rows for the second matrix\n");
+                        rows2 = getValidIntegerInput("rows");
+                        System.out.print("Enter number of rows for the second matrix\n");
+                        cols2 = getValidIntegerInput("columns");
+
+                        ClearTheTerminal();
+
+                        if(rows1 == rows2 && cols1 == cols2){
+                            System.out.print("Dimensions for both matrices are ("+rows1+" x "+ cols1 +")\n");
+                            System.out.println("Please enter corresponding elements for the first matrix.\n\n");
+                            matrix1 = getMatrixElements(rows1, cols1);
+
+                            ClearTheTerminal();
+                            System.out.println("Please enter corresponding elements for the second matrix.\n\n");
+                            matrix2 = getMatrixElements(rows2, cols2);
+                            result = elementWiseMultiplication(matrix1, matrix2);
+                            break;
+                        } else{
+                            ClearTheTerminal();
+                            System.out.println("Matrices must have the same size to operate element wise multiplication.\nPlease re-enter dimensions.\n");
+                        }
+                    }
+                
+                    ClearTheTerminal();
+                    System.out.println("Performing element-wise multiplication...\n\n");
                     Delay();
 
                     printMatrix(result);
