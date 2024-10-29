@@ -9,7 +9,7 @@ public class CourseProject1 {
 
     /* Statistical Information About an Array Starts Here */
 
-    public static double FindMedian(double[] array)
+    public static double findMedian(double[] array)
     {
         Arrays.sort(array);
         double median = 0;
@@ -29,7 +29,7 @@ public class CourseProject1 {
         return median;
     }
 
-    public static double FindArithmeticMean(double[] array)
+    public static double findArithmeticMean(double[] array)
     {
         double arithmeticMean = 0;
         double total = 0;
@@ -44,7 +44,7 @@ public class CourseProject1 {
         return arithmeticMean;
     }
 
-    public static double FindGeometricMean(double[] array)
+    public static double findGeometricMean(double[] array)
     {
         double geometricMean = 0;
         double total = 1;
@@ -59,19 +59,19 @@ public class CourseProject1 {
         return geometricMean;
     }
 
-    public static double FindHarmonicMean(double[] array, int i)
+    public static double findHarmonicMean(double[] array, int i)
     {
         if(i == 0)
         {
             return 1 / array[0];
         }
 
-        return (1 / array[i]) + FindHarmonicMean(array, i - 1);
+        return (1 / array[i]) + findHarmonicMean(array, i - 1);
     }
 
-    public static void StatInfoAboutArray(Scanner input)
+    public static void statInfoAboutArray(Scanner input)
     {
-        ClearTheTerminal();
+        clearTheTerminal();
 
         String[] asciiArt = {
             "                                                                                                                                                                            ",
@@ -139,10 +139,10 @@ public class CourseProject1 {
             System.out.printf("\nYour number %d is %.2f.", a + 1, array[a]);
         }
 
-        double median = FindMedian(array);
-        double arithmeticMean = FindArithmeticMean(array);
-        double geometricMean = FindGeometricMean(array);
-        double harmonicMean = sizeOfArray / FindHarmonicMean(array, sizeOfArray - 1);
+        double median = findMedian(array);
+        double arithmeticMean = findArithmeticMean(array);
+        double geometricMean = findGeometricMean(array);
+        double harmonicMean = sizeOfArray / findHarmonicMean(array, sizeOfArray - 1);
 
         System.out.printf("\n\nThe median of the array is: %.2f", median);
         System.out.printf("\n\nThe arithmetic mean of the array is: %.2f", arithmeticMean);
@@ -155,9 +155,9 @@ public class CourseProject1 {
 
     /* Matrix Operations Starts Here */
 
-    public static void MatrixOperations(Scanner input)
+    public static void matrixOperations(Scanner input)
     {
-        ClearTheTerminal();
+        clearTheTerminal();
 
         String[] asciiArt = {
             "_  _ ____ ___ ____ _ _  _    ____ ___  ____ ____ ____ ___ _ ____ _  _ ____ ",
@@ -172,9 +172,9 @@ public class CourseProject1 {
     
     /* Matrix Operations Ends Here */
 
-    public static void TextEncryptionDescription(Scanner input)
+    public static void textEncryptionDescription(Scanner input)
     {
-        ClearTheTerminal();
+        clearTheTerminal();
         
         System.out.println("Welcome to Text Encrytion");
     }
@@ -182,7 +182,7 @@ public class CourseProject1 {
 
     /* Tic Tac Toe Starts Here */
 
-    public static boolean CheckVerticallyAndHorizontally(int[][] matrix)
+    public static boolean checkVerticallyAndHorizontally(int[][] matrix)
     {
         for (int col = 0; col < 3; col++) 
         {
@@ -203,7 +203,7 @@ public class CourseProject1 {
         return false;
     }
 
-    public static boolean CheckDiagonally(int[][] matrix)
+    public static boolean checkDiagonally(int[][] matrix)
     {
         int diagonalOne = 0;
         int diagonalTwo = 0;
@@ -226,16 +226,16 @@ public class CourseProject1 {
         return false;
     }
 
-    public static boolean CheckForWin(int[][] matrix)
+    public static boolean checkForWin(int[][] matrix)
     {
-        if(CheckVerticallyAndHorizontally(matrix) || CheckDiagonally(matrix))
+        if(checkVerticallyAndHorizontally(matrix) || checkDiagonally(matrix))
         {
             return true;
         }
         return false;
     }
 
-    public static void PrintMatrix(int[][] matrix)
+    public static void printMatrix(int[][] matrix)
     {
         for(int i = 0; i < 3; i++)
         {
@@ -260,7 +260,7 @@ public class CourseProject1 {
         System.out.print("\n\n");
     }
 
-    public static boolean FillTheMatrix(int[][] matrix, int position, int player) {
+    public static boolean fillTheMatrix(int[][] matrix, int position, int player) {
         switch (position) {
             case 1:
                 if (matrix[0][0] == 0) {
@@ -325,8 +325,8 @@ public class CourseProject1 {
         return false;
     }
     
-    public static void TicTacToe(Scanner input) {
-        ClearTheTerminal();
+    public static void ticTacToe(Scanner input) {
+        clearTheTerminal();
     
         String[] asciiArt = {
             "                                                ",
@@ -362,7 +362,7 @@ public class CourseProject1 {
         do 
         {
             System.out.println("1 2 3\n4 5 6\n7 8 9\n");
-            PrintMatrix(matrix);
+            printMatrix(matrix);
     
             boolean validPosition = false;
             int position = 0;
@@ -375,7 +375,7 @@ public class CourseProject1 {
                 {
                     position = input.nextInt();
                     System.out.print("\n");
-                    validPosition = FillTheMatrix(matrix, position, currentPlayer);
+                    validPosition = fillTheMatrix(matrix, position, currentPlayer);
                 } 
                 catch (InputMismatchException e) 
                 {
@@ -385,7 +385,7 @@ public class CourseProject1 {
             } while (!validPosition);
     
             // Check if the game is won
-            gameWon = CheckForWin(matrix);
+            gameWon = checkForWin(matrix);
             if (gameWon) {
                 System.out.println("Player " + (currentPlayer == 4 ? "X" : "O") + " wins!");
                 break;
@@ -396,7 +396,7 @@ public class CourseProject1 {
     
         } while (!gameWon);
     
-        PrintMatrix(matrix);
+        printMatrix(matrix);
         System.out.println("Game over!");
     }
     
@@ -405,9 +405,9 @@ public class CourseProject1 {
     
     /* Common Methods Starts Here */
 
-    public static void WelcomeToApp()
+    public static void welcomeToApp()
     {
-        String[] asciiArt = AsciiArt(2);
+        String[] asciiArt = asciiArt(2);
 
         for (String line : asciiArt) {
             System.out.println(line);
@@ -417,7 +417,7 @@ public class CourseProject1 {
         System.out.println("Please just enter the letters that will be accepted (A - E). Do not use any other letter, numbers or special characters.\n");
     }
 
-    public static String[] AsciiArt(int x)
+    public static String[] asciiArt(int x)
     {
         if(x == 1)
         {
@@ -523,7 +523,7 @@ public class CourseProject1 {
         } 
     }
 
-    public static boolean ReturnMainMenu(Scanner inputMainMenu)
+    public static boolean returnMainMenu(Scanner inputMainMenu)
     {
         char mainMenuSelection = ' ';
         
@@ -557,7 +557,7 @@ public class CourseProject1 {
         return false; // Dummy
     }
 
-    public static void Delay()
+    public static void delay()
     {
         try {
             Thread.sleep(2000);
@@ -566,7 +566,7 @@ public class CourseProject1 {
         }
     }
 
-    public static void ClearTheTerminal()
+    public static void clearTheTerminal()
     {
         try {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
@@ -585,7 +585,7 @@ public class CourseProject1 {
 
         do 
         {
-            WelcomeToApp();
+            welcomeToApp();
 
             System.out.println("A - Statistical Information About an Array");
             System.out.println("B - Matrix Operations");
@@ -604,57 +604,57 @@ public class CourseProject1 {
                 {
                     case 'A':
                         System.out.println("\nYou are redirected to Statistical Information About an Array Application...\n");
-                        Delay();
-                        StatInfoAboutArray(input);
-                        if(!ReturnMainMenu(input))
+                        delay();
+                        statInfoAboutArray(input);
+                        if(!returnMainMenu(input))
                         {
                             selection = 'E';
                             break;
                         }
                         else
                         {
-                            ClearTheTerminal();
+                            clearTheTerminal();
                             selection = ' ';
                             continue;
                         }
                     case 'B':
                         System.out.println("\nYou are redirected to Matrix Operations Application...\n");
-                        Delay();
-                        MatrixOperations(input);
-                        if(!ReturnMainMenu(input))
+                        delay();
+                        matrixOperations(input);
+                        if(!returnMainMenu(input))
                         {
                             selection = 'E';
                             break;
                         }
                         else
                         {
-                            ClearTheTerminal();
+                            clearTheTerminal();
                             selection = ' ';
                             continue;
                         }
                     case 'C':
                         System.out.println("\nYou are redirected to Text Encryption / Decryption Application...\n");
-                        Delay();
-                        TextEncryptionDescription(input);
+                        delay();
+                        textEncryptionDescription(input);
                         break;
                     case 'D':
                         System.out.println("\nYou are redirected to Tic-tac-toe HotSeat Application...\n");
-                        Delay();
-                        TicTacToe(input);
-                        if(!ReturnMainMenu(input))
+                        delay();
+                        ticTacToe(input);
+                        if(!returnMainMenu(input))
                         {
                             selection = 'E';
                             break;
                         }
                         else
                         {
-                            ClearTheTerminal();
+                            clearTheTerminal();
                             selection = ' ';
                             continue;
                         }
                     case 'E':
                         System.out.println("\nTerminating the application...");
-                        Delay();
+                        delay();
                         break;
                     default:
                         System.out.println("\nYou entered an unaccepted character. Please try again!\n");
