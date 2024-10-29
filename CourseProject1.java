@@ -9,14 +9,13 @@ public class CourseProject1 {
     /* Statistical Information About an Array Starts Here */
 
     /**
-     * 
-     * @param array it's array that user will create 
-     * @return median of the array
      * This method first sorts the array using the sort method found in the java.util.Arrays library.
      * Then, by finding the length of the array, it checks whether this length is odd or even.
      * If it is even, it adds the two numbers in the middle of the array and divides them by two. It sets it equal to the median variable.
      * If it is odd, it sets the middle number of the array equal to the median.
      * Returns the median variable
+     * @param array it's array that user will create 
+     * @return median of the array
      */
 
     public static double findMedian(double[] array)
@@ -41,12 +40,11 @@ public class CourseProject1 {
 
     /**
      * This method calculates the arithmetic mean of the given array.
-     *
-     * @param array it's array that user will create
-     * @return arithmetic mean of the array
      * This method iterates through the array to sum all its elements.
      * Then, it divides the total sum by the length of the array to find the arithmetic mean.
      * Finally, it returns the arithmetic mean.
+     * @param array it's array that user will create
+     * @return arithmetic mean of the array
      */
 
     public static double findArithmeticMean(double[] array)
@@ -66,12 +64,12 @@ public class CourseProject1 {
 
     /**
      * This method calculates the geometric mean of the given array.
-     *
-     * @param array it's array that user will create
-     * @return geometric mean of the array
      * This method iterates through the array, multiplying all its elements together.
      * Then, it takes the n-th root of the total product (where n is the length of the array) to find the geometric mean.
      * Finally, it returns the geometric mean.
+     * @param array it's array that user will create
+     * @return geometric mean of the array
+     *
      */
 
     public static double findGeometricMean(double[] array)
@@ -91,13 +89,12 @@ public class CourseProject1 {
 
     /**
      * This method calculates the harmonic mean of the given array.
-     *
-     * @param array it's array that user will create
-     * @param i it represents the size of the array
-     * @return returns the harmonic mean of the array. If i is zero, it returns the inverse of the first element of the array.
      * This method uses recursion to calculate the harmonic mean. It checks if i is zero,
      * and if so, returns the inverse of the first element of the array. Otherwise,
      * it adds the inverse of the current element to the result of a recursive call with i decremented by one.
+     * @param array it's array that user will create
+     * @param i it represents the size of the array
+     * @return returns the harmonic mean of the array. If i is zero, it returns the inverse of the first element of the array.
      */
 
     public static double findHarmonicMean(double[] array, int i)
@@ -112,8 +109,6 @@ public class CourseProject1 {
 
 
     /**
-     * 
-     * @param input scanner variable from main to receive user input
      * This method created for organizing sub-methods of statistical information about an array operation.
      * When this method executed terminal will be cleared with clearTheTerminal method.
      * Then ascii art will be printed.
@@ -121,6 +116,7 @@ public class CourseProject1 {
      * Then, validation check is provided for this array size (Temporarily limited to 20).
      * The user is asked to enter a value into the double array created with this array size, and control is provided for this double value.
      * After the sub-methods are called, the user is shown the results of the mathematical operations he/she wanted to be calculated.
+     * @param input scanner variable from main to receive user input
      */
 
     public static void statInfoAboutArray(Scanner input)
@@ -228,6 +224,7 @@ public class CourseProject1 {
 
     /* Matrix Operations Starts Here */
 
+    /*
     public static void matrixOperations(Scanner input)
     {
         clearTheTerminal();
@@ -242,24 +239,35 @@ public class CourseProject1 {
             System.out.println(line);
         }
     }
-    
+    */
+
     /* Matrix Operations Ends Here */
 
+    
+    /* Text Encryption Starts Here */
+
+    /*
     public static void textEncryptionDescription(Scanner input)
     {
         clearTheTerminal();
         
         System.out.println("Welcome to Text Encrytion");
     }
+    */
 
+    /* Text Encryption Ends Here */
 
     /* Tic Tac Toe Starts Here */
 
     /**
-     * 
-     * @param matrix it's an integer matrix created for the tictactoe game
+     * Checks the tic-tac-toe board matrix for a winning condition both vertically and horizontally.
+     * Iterates through the columns and rows of the given matrix to calculate the sum of elements
+     * vertically and horizontally. If the sum matches a specific winning condition (12 or 15),
+     * returns true. Otherwise, returns false.
+     * @param matrix it's an integer matrix created for the tic-tac-toe game
      * @return returns boolean value after checking matrix vertically and horizontally
      */
+
     public static boolean checkVerticallyAndHorizontally(int[][] matrix)
     {
         for (int col = 0; col < 3; col++) 
@@ -282,8 +290,11 @@ public class CourseProject1 {
     }
 
     /**
-     * 
-     * @param matrix it's an integer matrix created for the tictactoe game
+     * Checks the tic-tac-toe board matrix for a winning condition diagonally.
+     * Iterates through the diagonals of the given matrix to calculate the sum of elements.
+     * If the sum matches a specific winning condition (12 or 15), returns true. 
+     * Otherwise, returns false.
+     * @param matrix it's an integer matrix created for the tic-tac-toe game
      * @return returns boolean value after checking matrix diagonally
      */
     
@@ -311,7 +322,7 @@ public class CourseProject1 {
     }
 
     /**
-     * 
+     * If returns true, one of the player won the game.
      * @param matrix it's an integer matrix created for the tictactoe game
      * @return returns boolean value after checking matrix vertically and horizontally and diagonally with if condition and methods
      */
@@ -321,11 +332,13 @@ public class CourseProject1 {
         return checkVerticallyAndHorizontally(matrix) || checkDiagonally(matrix);
     }
 
-
     /**
-     * 
-     * @param matrix it's an integer matrix created for the tictactoe game
+     * Prints the tic-tac-toe board matrix to the console.
+     * Iterates through the given matrix and prints different symbols based on the cell value:
+     * '.' for 0, 'X' for 4, and 'O' for 5.
+     * @param matrix it's an integer matrix created for the tic-tac-toe game
      */
+
     public static void printMatrix(int[][] matrix)
     {
         for(int i = 0; i < 3; i++)
@@ -352,12 +365,16 @@ public class CourseProject1 {
     }
 
     /**
-     * 
-     * @param matrix it's an integer matrix created for the tictactoe game
+     * Fills the tic-tac-toe board matrix at the specified position for a given player.
+     * Checks the specified position in the matrix to see if it is empty (0). If empty, 
+     * fills it with the player's value (4 or 5) and returns true. If the position is not 
+     * empty, prints an error message and returns false.
+     * @param matrix it's an integer matrix created for the tic-tac-toe game
      * @param position it's the position where the user wants to make a move (1-9)
      * @param player it's the integer variable representing the player who will make the move (4 or 5)
-     * @return returns a boolean value because this boolean value is used to check whether the user has selected a valid position.
+     * @return returns a boolean value indicating whether the move was successful
      */
+
     public static boolean fillTheMatrix(int[][] matrix, int position, int player) {
         switch (position) {
             case 1:
@@ -424,7 +441,19 @@ public class CourseProject1 {
     }
 
     /**
-     * 
+     * LOGIC OF OUR TICTACTOE:
+     * <ul>
+     * <li> The player X represents integer 4. And player O represents integer 5.
+     * <li> We wanted to mathematically calculate the winning control of the game by filling the 3x3 matrix we created with 0s.
+     * <li> If you place the values ​​4 and 5 in an integer 3x3 matrix, in the checks made for tictactoe (which is done by adding the horizontal, vertical or diagonal elements); 
+     * <li> if a player has won, you will not find any other value than 12 for X (i.e. 4) and 15 for O (i.e. 5).
+     * <li> This game was created using this logic.
+     * </ul>
+     * Within the method, after the game is presented with ASCII Art, a 3x3 int matrix is ​​created, which is filled with 0s.
+     * Then, the 4 integers representing player X are defined with the variable named currentPlayer.
+     * The user is asked to select a position and the valid position check is done in the loop.
+     * If the user has chosen a valid position, the winner is checked after each loop with the checkForWin method, and if there is no winner, the currentPlayer changes (if it is 4 it becomes 5, if it is 5 it becomes 4).
+     * At each stage the matrix is ​​suppressed and if there is a winner the game ends with the winner being announced on the console.
      * @param input scanner variable from main to receive user input
      */
     
@@ -510,8 +539,8 @@ public class CourseProject1 {
 
     /**
      * Shows the user the application's welcome message and instructions.
-     * This method calls a method using ASCII art
-     * Shows a message explaining which applications the user can use
+     * This method calls a method using ASCII art.
+     * Shows a message explaining which applications the user can use.
      */
 
     public static void welcomeToApp()
@@ -521,6 +550,13 @@ public class CourseProject1 {
         System.out.println("THERE ARE SOME APPLICATIONS ON THIS PROGRAM. PLEASE CHOOSE AN APPLICATION THAT YOU WANT TO USE.\n");
         System.out.println("Please just enter the letters that will be accepted (A - E). Do not use any other letter, numbers or special characters.\n");
     }
+
+    /**
+     * Prints an ASCII art to the console.
+     * 
+     * The method contains a string array with multiple lines of ASCII art and 
+     * iterates through the array to print each line to the console.
+     */
 
     public static void asciiArt()
     {
@@ -571,6 +607,16 @@ public class CourseProject1 {
         }
     }
 
+    /**
+     * Prompts the user to decide whether to return to the main menu or not.
+     * Continuously asks the user for input until a valid response ('Y' or 'N') is provided.
+     * If the user selects 'Y', the method calls the welcomeToApp() method to return to the main menu 
+     * and returns true. If the user selects 'N', the method returns false. For any other input, 
+     * an error message is displayed and the user is prompted again.
+     * @param inputMainMenu scanner variable from main to receive user input
+     * @return boolean value indicating whether the user wants to return to the main menu
+     */
+
     public static boolean returnMainMenu(Scanner inputMainMenu)
     {
         char mainMenuSelection = ' ';
@@ -606,6 +652,14 @@ public class CourseProject1 {
         return false; // Dummy
     }
 
+    /**
+     * Pauses the execution of the current thread for a specified duration.
+     * 
+     * This method puts the current thread to sleep for 2000 milliseconds (2 seconds).
+     * If the thread is interrupted during sleep, it catches the InterruptedException
+     * and prints the stack trace.
+     */
+
     public static void delay()
     {
         try {
@@ -615,17 +669,52 @@ public class CourseProject1 {
         }
     }
 
+    /**
+     * Clears the terminal screen based on the operating system.
+     * 
+     * This method checks the operating system and uses the appropriate command 
+     * to clear the terminal screen. For Windows, it uses "cls", and for other 
+     * operating systems (assumed to be Unix-like), it uses "clear". If an 
+     * exception occurs during this process, the stack trace is printed.
+     */
+
     public static void clearTheTerminal()
     {
-        try {
-            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-        } catch (Exception e) {
+        try 
+        {
+            String operatingSystem = System.getProperty("os.name").toLowerCase();
+
+            if (operatingSystem.contains("win")) 
+            {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            }
+            else
+            {
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+            }
+        } 
+        catch (Exception e) 
+        {
             e.printStackTrace();
         }
     }
 
     /* Common Methods Ends Here */
 
+    /**
+     * The main method that serves as the entry point for the application.
+     * This method initializes a Scanner object for user input and presents a menu with 
+     * several application options:
+     * - A: Statistical Information About an Array
+     * - B: Matrix Operations
+     * - C: Text Encryption / Decryption
+     * - D: Tic-tac-toe HotSeat
+     * - E: Terminate (Quit)
+     * Based on the user's selection, the corresponding application is executed, and the 
+     * user is asked if they want to return to the main menu after each operation. The 
+     * application runs in a loop until the user chooses to terminate (option E).
+     * @param args the command line arguments
+     */
 
     public static void main(String[] args)
     {        
@@ -668,7 +757,7 @@ public class CourseProject1 {
                     case 'B':
                         System.out.println("\nYou are redirected to Matrix Operations Application...\n");
                         delay();
-                        matrixOperations(input);
+                        //matrixOperations(input);
                         if(!returnMainMenu(input))
                         {
                             selection = 'E';
@@ -683,7 +772,7 @@ public class CourseProject1 {
                     case 'C':
                         System.out.println("\nYou are redirected to Text Encryption / Decryption Application...\n");
                         delay();
-                        textEncryptionDescription(input);
+                        //textEncryptionDescription(input);
                         break;
                     case 'D':
                         System.out.println("\nYou are redirected to Tic-tac-toe HotSeat Application...\n");
