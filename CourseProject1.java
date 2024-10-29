@@ -204,36 +204,6 @@ public class CourseProject1 {
         return matrix;
     }
 
-    // Singularity kontrolü yapar (determinant == 0) (Inverse işlemi için gerekli)
-    private static boolean isSingular(double[][] matrix) {
-        double determinant = calculateDeterminant(matrix);
-        return determinant == 0;
-    }
-
-    private static double[][] minor(double[][] matrix, int row, int column) {
-        int n = matrix.length;
-        double[][] minor = new double[n - 1][n - 1];
-        
-        int minorRow = 0;
-        int minorCol = 0;
-        for (int i = 0; i < n; i++) {
-            if (i == row) continue;
-            minorCol = 0;
-            for (int j = 0; j < n; j++) {
-                if (j == column) continue;
-                minor[minorRow][minorCol] = matrix[i][j];
-                minorCol++;
-            }
-            minorRow++;
-        }
-        return minor;
-    }
-
-    public static double calculateCofactor(double[][] matrix, int row, int col) {
-        double signCheck = Math.pow(-1, (row+col));
-        return signCheck * calculateDeterminant( minor(matrix, row, col) );
-    }
-
     public static void printMatrix(double[][] matrix) {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
@@ -250,8 +220,33 @@ public class CourseProject1 {
         ClearTheTerminal();
     }
 
+    private static double[][] minor(double[][] matrix, int row, int column) {
+        int n = matrix.length; 
+        double[][] minor = new double[n - 1][n - 1];
+    
+        int minorRow = 0; 
+        for (int i = 0; i < n; i++) {
+            if (i == row) continue;
+            int minorCol = 0; 
+            for (int j = 0; j < n; j++) {
+                if (j == column) continue; 
+                if (minorRow < n - 1 && minorCol < n - 1) {
+                    minor[minorRow][minorCol] = matrix[i][j]; 
+                }
+                minorCol++; 
+            }
+            minorRow++; 
+        }
+        return minor;
+    }
+
+    public static double calculateCofactor(double[][] matrix, int row, int col) {
+        double signCheck = Math.pow(-1, (row+col));
+        return signCheck * calculateDeterminant(minor(matrix, row, col));
+    }
 
     // Main operations:
+
     private static double[][] transpose(double[][] matrix) {
         int rows = matrix.length;
         int columns = matrix[0].length;
@@ -267,6 +262,10 @@ public class CourseProject1 {
     private static double calculateDeterminant(double[][] matrix) {
         int n = matrix.length;
 
+        if (n == 1) {
+            return matrix[0][0];
+        }
+
         if (n == 2) {
             return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
         }
@@ -278,17 +277,30 @@ public class CourseProject1 {
         return det;
     }
     
-    private static double[][] calculateInverse(double[][] matrix) {
-        int rows = matrix.length;
-        int columns = matrix[0].length;
+    public static double[][] calculateInverse(double[][] matrix, double det) {
+        int n = matrix.length;
+        double[][] inverseMatrix = new double[n][n];
 
-        double[][] inverseMatrix = new double[columns][rows];
+        if(n==1 && matrix[0][0] != 0) {
+            inverseMatrix[0][0] = 1 / matrix[0][0];
+            return inverseMatrix;
+        }
+        
 
-        double det = calculateDeterminant(matrix);
-        //double[][] adj = matrixAdjoint(matrix);
-        double scalar = (1/det);
-        //inverseMatrix = scalarMultiplication(adj, scalar);
-
+        double[][] cofactorMatrix = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                cofactorMatrix[i][j] = calculateCofactor(matrix, i, j);
+            }
+        }
+    
+        double[][] adjoint = transpose(cofactorMatrix);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                inverseMatrix[i][j] = adjoint[i][j] / det;
+            }
+        }
+    
         return inverseMatrix;
     }
 
@@ -366,20 +378,20 @@ public class CourseProject1 {
         
     public static void matrixOperations(Scanner var0) {
 
-        ClearTheTerminal();
-        String[] var1 = new String[]{
-                "_  _ ____ ___ ____ _ _  _    ____ ___  ____ ____ ____ ___ _ ____ _  _ ____ ",
-                "|\\/| |__|  |  |__/ |  \\/     |  | |__] |___ |__/ |__|  |  | |  | |\\ | [__  ",
-                "|  | |  |  |  |  \\ | _/\\_    |__| |    |___ |  \\ |  |  |  | |__| | \\| ___] "
-        };
-
-        for (String line : var1) {
-            System.out.println(line);
-        }
-
-        System.out.println("\n\nWith this application you can use some matrix operations.");
-
+        
         while (true) {
+            ClearTheTerminal();
+            String[] var1 = new String[]{
+                    "_  _ ____ ___ ____ _ _  _    ____ ___  ____ ____ ____ ___ _ ____ _  _ ____ ",
+                    "|\\/| |__|  |  |__/ |  \\/     |  | |__] |___ |__/ |__|  |  | |  | |\\ | [__  ",
+                    "|  | |  |  |  |  \\ | _/\\_    |__| |    |___ |  \\ |  |  |  | |__| | \\| ___] "
+            };
+    
+            for (String line : var1) {
+                System.out.println(line);
+            }
+    
+            System.out.println("\n\nWith this application you can use some matrix operations.");
             int operationSelection = 0;
 
             // Seçim Menüsü
@@ -413,8 +425,8 @@ public class CourseProject1 {
                 case 1:
                     // TRANSPOSE
 
-                    System.out.println("The transpose of a matrix is formed by swapping its rows and columns, turning row indices into column indices and vice versa.");
-                    System.out.println("First, we will ask for the dimensions of the matrix you want to transpose. Then, we will request the elements of the matrix with the dimensions you provided.\n\n");
+                    System.out.println("The transpose of a matrix is formed by swapping its rows and columns, turning row indices into column indices and vice versa.\n");
+                    System.out.println("==> First, we will ask for the dimensions of the matrix you want to transpose. Then, we will request the elements of the matrix with the dimensions you provided.\n\n");
 
                     Delay();
 
@@ -430,11 +442,11 @@ public class CourseProject1 {
                     double[][] transposed = transpose(matrix);
 
                     ClearTheTerminal();
-
                     System.out.println("Transpose of the given matrix is ... \n");
                     Delay();
 
                     printMatrix(transposed);
+
                     pressAnyKeyToContinue();
                 
                     break;
@@ -443,9 +455,9 @@ public class CourseProject1 {
 
                     double determinant;
 
-                    System.out.println("The determinant is a scalar value that is a function of a square matrix, providing important information about the matrix, such as whether it is invertible.");
-                    System.out.println("First, we will ask for the dimensions of the matrix you want to transpose. Then, we will request the elements of the matrix with the dimensions you provided.\n\n");
-                    System.out.println("Note that, a square matrix is a matrix that has the same number of rows and columns, meaning it has the dimensions nxn for some integer n.\n\n");
+                    System.out.println("The determinant is a scalar value that is a function of a square matrix, providing important information about the matrix, such as whether it is invertible.\n");
+                    System.out.println("==> First, we will ask for the dimensions of the matrix. Then, we will request the elements of the matrix with the dimensions you provided.\n");
+                    System.out.println("==> Note that, a square matrix is a matrix that has the same number of rows and columns, meaning it has the dimensions nxn for some integer n.\n\n");
 
                     Delay();
 
@@ -478,38 +490,52 @@ public class CourseProject1 {
                     break;
                 case 3:
                     // INVERSE
-
+                    
+                    System.out.println("The inverse of a matrix is a matrix that produces the identity matrix when multiplied with the original.\n");
+                    System.out.println("==> First, we will ask for the dimensions of the matrix. Then, we will request the elements of the matrix with the dimensions you provided.\n");
+                    System.out.println("==> Note that, the matrix must be square (same number of rows and columns) and have a non-zero determinant; otherwise, it is called a singular matrix, which has no inverse.\n\n");
                     double[][] inverse;
+
+
                     while(true){
                         System.out.print("Enter number of rows ");
                         rows = getValidIntegerInput("rows");
                         System.out.print("Enter number of columns ");
                         columns = getValidIntegerInput("columns");
+                        ClearTheTerminal();
+
                         if (rows == columns){
                             matrix = getMatrixElements(rows, columns);
-                            inverse = calculateInverse(matrix);
+                            double det = calculateDeterminant(matrix);
+                            ClearTheTerminal();
+
+                            if(rows==1 && matrix[0][0] == 0) {
+                                System.out.println("The inverse does not exist for a 1x1 matrix with a value of zero.");
+                            } else if (det != 0){
+                                inverse = calculateInverse(matrix ,det);
+                                System.out.println("Inverse of the given matrix is ... \n");
+                                Delay();
+                                printMatrix(inverse);
+                            } else{
+                                System.out.println("Matrix is singular, therefore not invertable (Determinant is zero).");
+                            }
                             break;
                         }
                         else{
                             ClearTheTerminal();
-                            System.out.println("rows and columns should be same in order matrix to be square matrix. Please re-enter sizes");
+                            System.out.println("Number of rows and columns should be same in order matrix to be square matrix. Please re-enter sizes");
                         }
                     }
-                    ClearTheTerminal();
-
-                    System.out.println("Inverse of the given matrix is ... \n");
-                    Delay();
-
-                    printMatrix(inverse);
+                    
                     pressAnyKeyToContinue();
-
                     break;
                 case 4:
                     // MULTIPLICATION
                 
-                    System.out.println("Matrix multiplication is an operation that takes two matrices and produces a new matrix by multiplying the rows of the first matrix by the columns of the second matrix,\nfollowing specific rules of alignment.");
-                    System.out.println("First, we will ask for the dimensions of each matrix, and then we will request the elements within each matrix.\n");
-                    System.out.println("Note that, for matrix multiplication to be valid, the number of columns in the first matrix must equal the number of rows in the second matrix.\n\n");
+                    System.out.println("Matrix multiplication is an operation that takes two matrices and produces a new matrix."); 
+                    System.out.println("This is done by multiplying the rows of the first matrix by the columns of the second matrix, following specific rules of alignment.\n");
+                    System.out.println("==> First, we will ask for the dimensions of each matrix, and then we will request the elements within each matrix.\n");
+                    System.out.println("==> Note that, for matrix multiplication to be valid, the number of columns in the first matrix must equal the number of rows in the second matrix.\n\n");
                     Delay();
 
                     result = multiplyMatrices();
@@ -526,8 +552,8 @@ public class CourseProject1 {
                 case 5:
                     // ELEMENT-WISE MULTIPLICATION
 
-                    System.out.println("Element-wise multiplication is the operation of multiplying each element of two matrices or arrays of the same size by the corresponding element in the other.");
-                    System.out.println("First, we will ask for the dimensions of each matrix, and then we will request the elements within each matrix.\n\n");
+                    System.out.println("Element-wise multiplication is the operation of multiplying each element of two matrices or arrays of the same size by the corresponding element in the other.\n");
+                    System.out.println("==> First, we will ask for the dimensions of each matrix, and then we will request the elements within each matrix.\n\n");
                     Delay();
                     int rows1;
                     int rows2;
