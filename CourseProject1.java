@@ -224,22 +224,422 @@ public class CourseProject1 {
 
     /* Matrix Operations Starts Here */
 
-    /*
-    public static void matrixOperations(Scanner input)
-    {
+    /**
+     * 
+     * @return
+     */
+
+    private static int getValidIntegerInput() {
+        Scanner scanner = new Scanner(System.in);
+        int input = -1; 
+        while (true) {
+            System.out.print("(Please enter a positive integer): ");
+            if (scanner.hasNextInt()) {
+                input = scanner.nextInt();
+                if (input > 0) {
+                    break;
+                } else {
+                    System.out.println("Invalid input. Please enter a positive integer.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a positive integer.");
+                scanner.next(); 
+            }
+        }
+        return input;
+    }
+
+    /**
+     * 
+     * @return
+     */
+
+    private static double getValidDoubleInput() {
+        Scanner scanner = new Scanner(System.in);
+        while (!scanner.hasNextDouble()) {
+            System.out.println("Invalid input. Please enter a numeric value (Use comma for double values).");
+            scanner.next();
+        }
+        return scanner.nextDouble();
+    }
+
+    /**
+     * 
+     * @param rows
+     * @param columns
+     * @return
+     */
+
+    private static double[][] getMatrixInputforSquareMatrix(int rows, int columns) {
         clearTheTerminal();
 
-        String[] asciiArt = {
-            "_  _ ____ ___ ____ _ _  _    ____ ___  ____ ____ ____ ___ _ ____ _  _ ____ ",
-            "|\\/| |__|  |  |__/ |  \\/     |  | |__] |___ |__/ |__|  |  | |  | |\\ | [__  ",
-            "|  | |  |  |  |  \\ | _/\\_    |__| |    |___ |  \\ |  |  |  | |__| | \\| ___] "
-        };
+        double[][] matrix = new double[rows][columns];
+        System.out.println("Enter matrix elements:");
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                System.out.print("Enter element for [" + i + "][" + j + "]: " );
+                matrix[i][j] = getValidDoubleInput();
+            }
+        }
+        return matrix;
+    }
 
-        for (String line : asciiArt) {
-            System.out.println(line);
+    /**
+     * 
+     * @return
+     */
+
+    private static double[][] getMatrixInput() {
+        clearTheTerminal();
+        System.out.print("Enter number of rows ");
+        int rows = getValidIntegerInput();
+        System.out.print("Enter number of columns ");
+        int columns = getValidIntegerInput();
+
+        double[][] matrix = new double[rows][columns];
+        System.out.println("Enter matrix elements:");
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                System.out.println("Enter element for [" + i + "][" + j + "]");
+                matrix[i][j] = getValidDoubleInput();
+            }
+        }
+        return matrix;
+    }
+
+    /**
+     * 
+     * @return
+     */
+
+    private static double[][] getSquareMatrixInput() {
+
+        double[][] matrix;
+        while(true){
+            System.out.print("Enter number of rows ");
+            int rows = getValidIntegerInput();
+            System.out.print("Enter number of columns ");
+            int columns = getValidIntegerInput();
+            if (rows == columns){
+                matrix = getMatrixInputforSquareMatrix(rows, columns);
+                return matrix;
+            }
+            else{
+                clearTheTerminal();
+                System.out.println("rows and columns should be same in order matrix to be square matrix. Please re-enter sizes");
+            }
+        }
+        
+    }
+
+    /**
+     * 
+     * @param matrix
+     * @return
+     */
+
+    private static double[][] transpose(double[][] matrix) {
+        int rows = matrix.length;
+        int columns = matrix[0].length;
+        double[][] transposed = new double[columns][rows];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                transposed[j][i] = matrix[i][j];
+            }
+        }
+        return transposed;
+    }
+
+    /**
+     * 
+     * @param matrix
+     * @return
+     */
+
+    private static boolean isSingular(double[][] matrix) {
+        double determinant = calculateDeterminant(matrix);
+        return determinant == 0;
+    }
+
+    /**
+     * 
+     * @param matrix1
+     * @param matrix2
+     * @return
+     */
+
+    private static boolean canMultiply(double[][] matrix1, double[][] matrix2) {
+        return matrix1[0].length == matrix2.length;
+    }
+
+    /**
+     * 
+     * @param matrix
+     * @return
+     */
+
+    private static double calculateDeterminant(double[][] matrix) {
+        int n = matrix.length;
+
+        if (n == 2) {
+            return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+        }
+
+        double det = 0;
+        for (int i = 0; i < n; i++) {
+            det += Math.pow(-1, i) * matrix[0][i] * calculateDeterminant(minor(matrix, 0, i));
+        }
+        return det;
+    }
+    
+    /**
+     * 
+     * @param matrix
+     * @return
+     */
+
+    private static double[][] calculateInverse(double[][] matrix) {
+        int rows = matrix.length;
+        int columns = matrix[0].length;
+
+        double[][] inverseMatrix = new double[columns][rows];
+
+        double det = calculateDeterminant(matrix);
+        //double[][] adj = matrixAdjoint(matrix);
+        double scalar = (1/det);
+        //inverseMatrix = scalarMultiplication(adj, scalar);
+
+        return inverseMatrix;
+    }
+
+    /**
+     * 
+     * @param matrix1
+     * @param matrix2
+     * @return
+     */
+
+    private static double[][] elementWiseMultiplication(double[][] matrix1, double[][] matrix2) {
+        int rows = matrix1.length;
+        int cols = matrix1[0].length;
+        double[][] result = new double[rows][cols];
+        
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result[i][j] = matrix1[i][j] * matrix2[i][j];
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 
+     * @param matrix1
+     * @param matrix2
+     * @return
+     */
+
+    private static double[][] multiplyMatrices(double[][] matrix1, double[][] matrix2) {
+        int rows1 = matrix1.length;
+        int cols1 = matrix1[0].length;
+        int cols2 = matrix2[0].length;
+        double[][] result = new double[rows1][cols2];
+
+        for (int i = 0; i < rows1; i++) {
+            for (int j = 0; j < cols2; j++) {
+                for (int k = 0; k < cols1; k++) {
+                    result[i][j] += matrix1[i][k] * matrix2[k][j];
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 
+     * @param matrix
+     */
+
+    public static void printMatrix(double[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                System.out.print(matrix[i][j] + "\t");
+            }
+            System.out.println();
         }
     }
-    */
+
+    /**
+     * 
+     * @param matrix
+     * @param row
+     * @param column
+     * @return
+     */
+
+    private static double[][] minor(double[][] matrix, int row, int column) {
+        int n = matrix.length;
+        double[][] minor = new double[n - 1][n - 1];
+        
+        int minorRow = 0;
+        int minorCol = 0;
+        for (int i = 0; i < n; i++) {
+            if (i == row) continue;
+            minorCol = 0;
+            for (int j = 0; j < n; j++) {
+                if (j == column) continue;
+                minor[minorRow][minorCol] = matrix[i][j];
+                minorCol++;
+            }
+            minorRow++;
+        }
+        return minor;
+    }
+
+    /**
+     * 
+     * @param matrix
+     * @param row
+     * @param col
+     * @return
+     */
+
+    public static double calculateCofactor(double[][] matrix, int row, int col) {
+        double signCheck = Math.pow(-1, (row+col));
+        return signCheck * calculateDeterminant( minor(matrix, row, col) );
+
+    }
+
+    /**
+     * 
+     */
+
+    private static void pressAnyKeyToContinue() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\nPress enter to continue...");
+        scanner.nextLine();
+        clearTheTerminal();
+    }
+   
+    /**
+     * 
+     * @param var0
+     */
+    
+    public static void matrixOperations(Scanner var0) {
+        clearTheTerminal();
+        String[] var1 = new String[]{
+                "_  _ ____ ___ ____ _ _  _    ____ ___  ____ ____ ____ ___ _ ____ _  _ ____ ",
+                "|\\/| |__|  |  |__/ |  \\/     |  | |__] |___ |__/ |__|  |  | |  | |\\ | [__  ",
+                "|  | |  |  |  |  \\ | _/\\_    |__| |    |___ |  \\ |  |  |  | |__| | \\| ___] "
+        };
+
+        for (String line : var1) {
+            System.out.println(line);
+        }
+
+        System.out.println("\n\nWith this application you can use some matrix operations.");
+
+        while (true) {
+            int operationSelection = 0;
+
+            System.out.println("1 - Transpose");
+            System.out.println("2 - Determinant");
+            System.out.println("3 - Inverse");
+            System.out.println("4 - Matrix Multiplication");
+            System.out.println("5 - Element-wise Multiplication");
+            System.out.println("6 - Return to the Main Menu\n");
+            System.out.print("Please choose an application: ");
+
+            try {
+                operationSelection = var0.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Error! Please enter a valid number (1-6).");
+                var0.next();
+                continue;
+            }
+
+            clearTheTerminal();
+
+            double[][] matrix;
+            double[][] matrix1;
+            double[][] matrix2;
+            double[][] result;
+
+            switch (operationSelection) {
+                case 1:
+                    // TRANSPOSE
+
+                    matrix = getMatrixInput();
+                    double[][] transposed = transpose(matrix);
+                    clearTheTerminal();
+                    System.out.println("Transpose of the given matrix is ... \n");
+                    printMatrix(transposed);
+
+                    pressAnyKeyToContinue();
+                
+                    break;
+                case 2:
+                    // DETERMINANT
+
+                    matrix = getSquareMatrixInput();
+                    if (matrix != null) {
+                        double determinant = calculateDeterminant(matrix);
+                        System.out.println("Determinant: " + determinant);
+                    }
+
+                    pressAnyKeyToContinue();
+
+                    break;
+                case 3:
+                    // INVERSE
+
+                    matrix = getSquareMatrixInput();
+                    if (matrix != null && !isSingular(matrix)) {
+                        double[][] inverse = calculateInverse(matrix);
+                        printMatrix(inverse);
+                    }
+
+                    pressAnyKeyToContinue();
+
+                    break;
+                case 4:
+                    // MULTIPLICATION
+
+                    matrix1 = getMatrixInput();
+                    matrix2 = getMatrixInput();
+                    if (canMultiply(matrix1, matrix2)) {
+                        result = multiplyMatrices(matrix1, matrix2);
+                        printMatrix(result);
+                    } else {
+                        System.out.println("Matrix dimensions do not match for multiplication.");
+                    }
+
+                    pressAnyKeyToContinue();
+
+                    break;
+                case 5:
+
+                    matrix1 = getSquareMatrixInput();
+                    matrix2 = getSquareMatrixInput();
+                    
+                    result = elementWiseMultiplication(matrix1, matrix2);
+                    System.out.println("Performing element-wise multiplication...");
+                    printMatrix(result);
+                   
+
+                    pressAnyKeyToContinue();
+
+                    break;
+                case 6:
+                    System.out.println("Returning to the Main Menu...");
+
+                    return; 
+                default:
+                    System.out.println("Please enter a valid number (1-6).");
+            }
+        }
+    }
 
     /* Matrix Operations Ends Here */
 
@@ -757,7 +1157,7 @@ public class CourseProject1 {
                     case 'B':
                         System.out.println("\nYou are redirected to Matrix Operations Application...\n");
                         delay();
-                        //matrixOperations(input);
+                        matrixOperations(input);
                         if(!returnMainMenu(input))
                         {
                             selection = 'E';
