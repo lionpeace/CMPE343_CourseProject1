@@ -1,13 +1,23 @@
-// COURSE PROJECT #1 - GROUP 6
+/** CMPE343 COURSE PROJECT #1 - GROUP 6 */ 
 
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
 public class CourseProject1 {
 
     /* Statistical Information About an Array Starts Here */
+
+    /**
+     * 
+     * @param array it's array that user will create 
+     * @return median of the array
+     * This method first sorts the array using the sort method found in the java.util.Arrays library.
+     * Then, by finding the length of the array, it checks whether this length is odd or even.
+     * If it is even, it adds the two numbers in the middle of the array and divides them by two. It sets it equal to the median variable.
+     * If it is odd, it sets the middle number of the array equal to the median.
+     * Returns the median variable
+     */
 
     public static double findMedian(double[] array)
     {
@@ -29,6 +39,16 @@ public class CourseProject1 {
         return median;
     }
 
+    /**
+     * This method calculates the arithmetic mean of the given array.
+     *
+     * @param array it's array that user will create
+     * @return arithmetic mean of the array
+     * This method iterates through the array to sum all its elements.
+     * Then, it divides the total sum by the length of the array to find the arithmetic mean.
+     * Finally, it returns the arithmetic mean.
+     */
+
     public static double findArithmeticMean(double[] array)
     {
         double arithmeticMean = 0;
@@ -43,6 +63,16 @@ public class CourseProject1 {
 
         return arithmeticMean;
     }
+
+    /**
+     * This method calculates the geometric mean of the given array.
+     *
+     * @param array it's array that user will create
+     * @return geometric mean of the array
+     * This method iterates through the array, multiplying all its elements together.
+     * Then, it takes the n-th root of the total product (where n is the length of the array) to find the geometric mean.
+     * Finally, it returns the geometric mean.
+     */
 
     public static double findGeometricMean(double[] array)
     {
@@ -59,6 +89,17 @@ public class CourseProject1 {
         return geometricMean;
     }
 
+    /**
+     * This method calculates the harmonic mean of the given array.
+     *
+     * @param array it's array that user will create
+     * @param i it represents the size of the array
+     * @return returns the harmonic mean of the array. If i is zero, it returns the inverse of the first element of the array.
+     * This method uses recursion to calculate the harmonic mean. It checks if i is zero,
+     * and if so, returns the inverse of the first element of the array. Otherwise,
+     * it adds the inverse of the current element to the result of a recursive call with i decremented by one.
+     */
+
     public static double findHarmonicMean(double[] array, int i)
     {
         if(i == 0)
@@ -68,6 +109,19 @@ public class CourseProject1 {
 
         return (1 / array[i]) + findHarmonicMean(array, i - 1);
     }
+
+
+    /**
+     * 
+     * @param input scanner variable from main to receive user input
+     * This method created for organizing sub-methods of statistical information about an array operation.
+     * When this method executed terminal will be cleared with clearTheTerminal method.
+     * Then ascii art will be printed.
+     * After the necessary explanations about the operation are made to the user, the user is asked for the size of the array that will be created.
+     * Then, validation check is provided for this array size (Temporarily limited to 20).
+     * The user is asked to enter a value into the double array created with this array size, and control is provided for this double value.
+     * After the sub-methods are called, the user is shown the results of the mathematical operations he/she wanted to be calculated.
+     */
 
     public static void statInfoAboutArray(Scanner input)
     {
@@ -146,8 +200,27 @@ public class CourseProject1 {
 
         System.out.printf("\n\nThe median of the array is: %.2f", median);
         System.out.printf("\n\nThe arithmetic mean of the array is: %.2f", arithmeticMean);
-        System.out.printf("\n\nThe geometric mean of the array is: %.2f", geometricMean);
-        System.out.printf("\n\nThe harmonic mean of the array is: %.2f\n\n", harmonicMean);
+        System.out.printf("\n\nThe harmonic mean of the array is: %.2f", harmonicMean);
+
+        if(Double.isNaN(geometricMean))
+        {
+            System.out.printf("\n\nThe geometric mean of the array is: NaN (Not a Number). \n\nBecause:\n\n");
+            System.out.println
+            (
+                "The complexity of negative numbers in geometric mean calculations is indeed interesting. "
+                + "\nThe geometric mean is the root of the product of numbers, and when negative numbers are included, the product becomes negative."
+                + "\nWhen taking the root of negative products, the results involve complex numbers, which are not valid real numbers.\n\n"
+                + "If you receive NaN (Not a Number) when using negative numbers, it indicates that the mathematical operation is undefined or invalid."
+                + "\nHowever, in some cases where the number set includes a mix of positive and negative numbers, the geometric mean may still be calculated if the numbers are made positive (e.g., by taking the absolute value of negative numbers).\n\n"
+                + "Thus, the role and result of negative numbers in geometric mean calculations can vary depending on the combination and total count of numbers."
+                + "\nNevertheless, the presence of negative numbers generally invalidates the geometric mean calculation."
+            );
+        }
+        else
+        {
+            System.out.printf("\n\nThe geometric mean of the array is: %.2f", geometricMean);
+        }
+
     }
 
     /* Statistical Information About an Array Ends Here */
@@ -182,6 +255,11 @@ public class CourseProject1 {
 
     /* Tic Tac Toe Starts Here */
 
+    /**
+     * 
+     * @param matrix it's an integer matrix created for the tictactoe game
+     * @return returns boolean value after checking matrix vertically and horizontally
+     */
     public static boolean checkVerticallyAndHorizontally(int[][] matrix)
     {
         for (int col = 0; col < 3; col++) 
@@ -203,6 +281,12 @@ public class CourseProject1 {
         return false;
     }
 
+    /**
+     * 
+     * @param matrix it's an integer matrix created for the tictactoe game
+     * @return returns boolean value after checking matrix diagonally
+     */
+    
     public static boolean checkDiagonally(int[][] matrix)
     {
         int diagonalOne = 0;
@@ -226,15 +310,22 @@ public class CourseProject1 {
         return false;
     }
 
+    /**
+     * 
+     * @param matrix it's an integer matrix created for the tictactoe game
+     * @return returns boolean value after checking matrix vertically and horizontally and diagonally with if condition and methods
+     */
+
     public static boolean checkForWin(int[][] matrix)
     {
-        if(checkVerticallyAndHorizontally(matrix) || checkDiagonally(matrix))
-        {
-            return true;
-        }
-        return false;
+        return checkVerticallyAndHorizontally(matrix) || checkDiagonally(matrix);
     }
 
+
+    /**
+     * 
+     * @param matrix it's an integer matrix created for the tictactoe game
+     */
     public static void printMatrix(int[][] matrix)
     {
         for(int i = 0; i < 3; i++)
@@ -260,6 +351,13 @@ public class CourseProject1 {
         System.out.print("\n\n");
     }
 
+    /**
+     * 
+     * @param matrix it's an integer matrix created for the tictactoe game
+     * @param position it's the position where the user wants to make a move (1-9)
+     * @param player it's the integer variable representing the player who will make the move (4 or 5)
+     * @return returns a boolean value because this boolean value is used to check whether the user has selected a valid position.
+     */
     public static boolean fillTheMatrix(int[][] matrix, int position, int player) {
         switch (position) {
             case 1:
@@ -324,6 +422,11 @@ public class CourseProject1 {
         System.out.println("The position is not empty. Please choose another position!");
         return false;
     }
+
+    /**
+     * 
+     * @param input scanner variable from main to receive user input
+     */
     
     public static void ticTacToe(Scanner input) {
         clearTheTerminal();
@@ -405,6 +508,12 @@ public class CourseProject1 {
     
     /* Common Methods Starts Here */
 
+    /**
+     * Shows the user the application's welcome message and instructions.
+     * This method calls a method using ASCII art
+     * Shows a message explaining which applications the user can use
+     */
+
     public static void welcomeToApp()
     {
         asciiArt();
@@ -478,6 +587,7 @@ public class CourseProject1 {
                 switch(mainMenuSelection)
                 {
                     case 'Y':
+                        welcomeToApp();
                         return true;
                     case 'N':
                         return false;
