@@ -760,7 +760,10 @@ public class CourseProject1 {
     /* Text Encryption Starts Here */
 
     /**
-     * 
+     * This method was created to give a user the option to encrypt text, decrypt text or terminate a programme.
+     * When this method is executed, it lists the operations that the user can perform and tells the user to select an option.
+     * The ‘a’ option specifies the text encryption process, the ‘b’ option specifies the decryption process, and the ‘c’ option gives the option to terminate the programme.
+     * Using the System.out.print method, the user is prompted to enter one of the options (a, b or c) directly.
      */
 
     private static void listOptions() {
@@ -773,10 +776,11 @@ public class CourseProject1 {
     }
 
     /**
-     * 
-     * @param inpuText
-     * @param scroll
-     * @return
+     * This method encrypts or decrypts a given text by shifting the letters forward or backward by a certain offset.
+     * Scrolling is only performed on letters; characters other than letters remain intact.
+     * @param inpuText is the input string type representing the text to be scrolled.
+     * @param scroll is an integer value of type int that specifies how many units the letters will be shifted from their ASCII values.
+     * The "return transformedTextResult.toString()" statement returns the characters accumulated in the "StringBuilder" object "transformedTextResult" as a String.
      */
 
     private static String scrollText(String inpuText, int scroll) {
@@ -802,7 +806,13 @@ public class CourseProject1 {
     }
 
     /**
-     * 
+     * This method provides a user-interactive interface for encrypting and decrypting text on a terminal. The user is presented with a title in ASCII and then given several options and asked to encrypt or decrypt based on the user's choice.
+     * The Input Scanner type is used to receive input from the user; the parameter is passed through the main programme and is used to receive text input from the user or to select their options.
+     * The asciiArt array is constructed from String elements, each line of which is a line of ASCII art.
+     * The listOptions method is a menu that prompts the user to select an option.
+     * The usrChoice variable receives input from the user and continues until it reaches one of the options "a", "b", or "c". The check is performed after usrChoice has been converted to lowercase and all leading and trailing spaces have been removed.
+     * Encryption is performed when the user selects option "a". The scrollText method encrypts each letter by shifting it five units. If the user selects option "b", decryption is performed. This time, the scrollText method is called with a negative shift value of -5, resulting in decryption. When the user selects option "c", a message appears on the screen indicating that the program is about to exit, and the loop is terminated.
+     * If the user enters an invalid option, a warning message is displayed. Furthermore, if the user does not select the 'c' option, listOptions() is called again, and the menu is displayed again. Thus, if the user wants to perform another operation, the options are easily accessible.
      * @param input
      */
     
