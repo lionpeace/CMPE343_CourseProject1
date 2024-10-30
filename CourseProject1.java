@@ -302,7 +302,7 @@ public class CourseProject1 {
      */
 
     private static void pressAnyKeyToContinue(Scanner scanner) {
-        System.out.println("\nPress enter to continue...");
+        System.out.println("\nPress enter to return the menu of operation...");
         scanner.nextLine();
         scanner.nextLine();
     }
@@ -437,46 +437,52 @@ public class CourseProject1 {
      * @return
      */
 
-    /*
-    private static double[][] multiplyMatrices() {
+    
+    private static double[][] multiplyMatrices(Scanner input) {
         while(true){
             System.out.println("Please enter dimensions for the first matrix.");
             System.out.print("Enter number of rows for the first matrix ");
-            int rows1 = getValidIntegerInput("rows");
+            int rows1 = getValidIntegerInput("rows", input);
 
             System.out.print("Enter number of columns for the first matrix ");
-            int cols1 = getValidIntegerInput("columns");
+            int cols1 = getValidIntegerInput("columns", input);
 
             clearTheTerminal();
 
             System.out.println("Dimensions for the first matrix is ("+rows1+"x"+cols1+"). Please enter dimensions for the second matrix. ");
             System.out.print("Enter number of rows for the second matrix ");
-            int rows2 = getValidIntegerInput("rows");
+            int rows2 = getValidIntegerInput("rows", input);
 
             System.out.print("Enter number of columns for the second matrix ");
-            int cols2 = getValidIntegerInput("columns");
+            int cols2 = getValidIntegerInput("columns", input);
 
             clearTheTerminal();
             if (cols1 == rows2){
                 double[][] matrix1 = new double[rows1][cols1];
-                System.out.println("Enter elements for the first matrix :");
+                System.out.println("Enter elements for the first matrix:\n");
                 for (int i = 0; i < rows1; i++) {
                     for (int j = 0; j < cols1; j++) {
-                        System.out.println("Enter element for [" + i + "][" + j + "]");
-                        matrix1[i][j] = getValidDoubleInput(i,j);
+                        System.out.print("Enter element for [" + i + "][" + j + "]: ");
+                        matrix1[i][j] = getValidDoubleInput(i,j, input);
                     }
                 }
 
                 clearTheTerminal();
                 double[][] matrix2 = new double[rows2][cols2];
-                System.out.println("Enter elements for the second matrix :");
+                System.out.println("Enter elements for the second matrix:\n");
                 for (int i = 0; i < rows2; i++) {
                     for (int j = 0; j < cols2; j++) {
-                        System.out.println("Enter element for [" + i + "][" + j + "]");
-                        matrix2[i][j] = getValidDoubleInput(i,j);
+                        System.out.print("Enter element for [" + i + "][" + j + "]: ");
+                        matrix2[i][j] = getValidDoubleInput(i,j, input);
                     }
                 }
-                
+
+                clearTheTerminal();
+                System.out.println("First matrix: \n");
+                printMatrix(matrix1);
+                System.out.println("\nSecond matrix: \n");
+                printMatrix(matrix2);
+
                 double[][] result = new double[rows1][cols2];
         
                 for (int i = 0; i < rows1; i++) {
@@ -494,8 +500,6 @@ public class CourseProject1 {
             }
         }
     }
-
-    */
 
     // Element Wise Multiplication
 
@@ -516,6 +520,12 @@ public class CourseProject1 {
                 result[i][j] = matrix1[i][j] * matrix2[i][j];
             }
         }
+
+        System.out.println("First matrix: \n");
+        printMatrix(matrix1);
+        System.out.println("\nSecond matrix: \n");
+        printMatrix(matrix2);
+
         return result;
     }
 
@@ -568,9 +578,7 @@ public class CourseProject1 {
 
             switch (operationSelection) {
                 case 1:
-
                     // TRANSPOSE
-
                     System.out.println("The transpose of a matrix is formed by swapping its rows and columns, turning row indices into column indices and vice versa.\n");
                     System.out.println("==> First, we will ask for the dimensions of the matrix you want to transpose. Then, we will request the elements of the matrix with the dimensions you provided.\n\n");
 
@@ -600,7 +608,6 @@ public class CourseProject1 {
                     // DETERMINANT
 
                     double determinant;
-
                     System.out.println("The determinant is a scalar value that is a function of a square matrix, providing important information about the matrix, such as whether it is invertible.\n");
                     System.out.println("==> First, we will ask for the dimensions of the matrix. Then, we will request the elements of the matrix with the dimensions you provided.\n");
                     System.out.println("==> Note that, a square matrix is a matrix that has the same number of rows and columns, meaning it has the dimensions nxn for some integer n.\n\n");
@@ -635,12 +642,11 @@ public class CourseProject1 {
                     break;
                 case 3:
                     // INVERSE
-                    
+
                     System.out.println("The inverse of a matrix is a matrix that produces the identity matrix when multiplied with the original.\n");
                     System.out.println("==> First, we will ask for the dimensions of the matrix. Then, we will request the elements of the matrix with the dimensions you provided.\n");
                     System.out.println("==> Note that, the matrix must be square (same number of rows and columns) and have a non-zero determinant; otherwise, it is called a singular matrix, which has no inverse.\n\n");
                     double[][] inverse;
-
 
                     while(true){
                         System.out.print("Enter number of rows ");
@@ -657,9 +663,10 @@ public class CourseProject1 {
                             if(rows==1 && matrix[0][0] == 0) {
                                 System.out.println("The inverse does not exist for a 1x1 matrix with a value of zero.");
                             } else if (det != 0){
+                                System.out.println("The matrix before the inverse: \n");
+                                printMatrix(matrix);
                                 inverse = calculateInverse(matrix ,det);
-                                System.out.println("Inverse of the given matrix is ... \n");
-                                delay();
+                                System.out.println("\nThe matrix after the inverse: \n");
                                 printMatrix(inverse);
                             } else{
                                 System.out.println("Matrix is singular, therefore not invertable (Determinant is zero).");
@@ -671,7 +678,6 @@ public class CourseProject1 {
                             System.out.println("Number of rows and columns should be same in order matrix to be square matrix. Please re-enter sizes");
                         }
                     }
-                    
                     pressAnyKeyToContinue(input);
                     break;
                 case 4:
@@ -683,14 +689,13 @@ public class CourseProject1 {
                     System.out.println("==> Note that, for matrix multiplication to be valid, the number of columns in the first matrix must equal the number of rows in the second matrix.\n\n");
                     delay();
 
-                    //result = multiplyMatrices();
+                    result = multiplyMatrices(input);
 
-                    clearTheTerminal();
-
-                    System.out.println("Performing multiplication. Resulting matrix is ... \n");
+                    System.out.println("\nPerforming multiplication...");
                     delay();
-
-                    //printMatrix(result);
+                    
+                    System.out.println("\nResulting Matrix: \n");
+                    printMatrix(result);
                     pressAnyKeyToContinue(input);
 
                     break;
@@ -734,16 +739,14 @@ public class CourseProject1 {
                         }
                     }
                 
-                    clearTheTerminal();
-                    System.out.println("Performing element-wise multiplication...\n\n");
+                    System.out.println("\n\nPerforming element-wise multiplication...");
                     delay();
-
+                    System.out.println("\nResulting Matrix: \n");
                     printMatrix(result);
                     pressAnyKeyToContinue(input);
 
                     break;
                 case 6:
-                    //System.out.println("Returning to the Main Menu...");
                     return; 
                 default:
                     System.out.println("Please enter a valid number (1-6).");
