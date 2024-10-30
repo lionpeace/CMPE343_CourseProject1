@@ -759,14 +759,103 @@ public class CourseProject1 {
     
     /* Text Encryption Starts Here */
 
-    /*
+    /**
+     * 
+     */
+
+    private static void listOptions() {
+        System.out.println("\n--- Text Encryption - Decryption ---");
+        System.out.println("Select an option :");
+        System.out.println(" a) Encrypt the text");
+        System.out.println(" b) Decrypt the text");
+        System.out.println(" c) Finish the program");
+        System.out.print("Your option : ");
+    }
+
+    /**
+     * 
+     * @param inpuText
+     * @param scroll
+     * @return
+     */
+
+    private static String scrollText(String inpuText, int scroll) {
+        StringBuilder transformedTextResult = new StringBuilder();
+        for (char chr : inpuText.toCharArray()) {
+            if (Character.isLetter(chr)) {
+                int alphabetSize = 26;
+                char scrolledCh = (char) (chr + scroll);
+
+                if (Character.isUpperCase(chr)) {
+                    if (scrolledCh > 'Z') scrolledCh -= alphabetSize;
+                    else if (scrolledCh < 'A') scrolledCh += alphabetSize;
+                } else if (Character.isLowerCase(chr)) {
+                    if (scrolledCh > 'z') scrolledCh -= alphabetSize;
+                    else if (scrolledCh < 'a') scrolledCh += alphabetSize;
+                }
+                transformedTextResult.append(scrolledCh);
+            } else {
+                transformedTextResult.append(chr);
+            }
+        }
+        return transformedTextResult.toString();
+    }
+
+    /**
+     * 
+     * @param input
+     */
+    
     public static void textEncryptionDescription(Scanner input)
     {
         clearTheTerminal();
-        
-        System.out.println("Welcome to Text Encrytion");
+
+        String[] asciiArt = new String[]{
+            "___ ____ _  _ ___    ____ _  _ ____ ____ _   _ ___  ___ _ ____ _  _",
+            "|  |___  \\/   |     |___ |\\ | |    |__/  \\_/  |__]  |  | |  | |\\ |",
+            "|  |___ _/\\_  |     |___ | \\| |___ |  \\   |   |     |  | |__| | \\|",
+            "___  ____ ____ ____ _   _ ___  ___ _ ____ _  _",
+            "|  \\ |___ |    |__/  \\_/  |__]  |  | |  | |\\ |",
+            "|__/ |___ |___ |  \\   |   |     |  | |__| | \\|",
+            };
+            for (String line : asciiArt) {
+                System.out.println(line);
+            }
+
+
+        listOptions();
+        input.next();
+        String usrChoice;
+
+        do {
+            usrChoice = input.nextLine().trim().toLowerCase();
+                if(usrChoice.equals("a")) 
+                {
+                    System.out.println("Text for encryption: ");
+                    String encryptedText = scrollText(input.nextLine(), 5);
+                    System.out.println("After encryption, the output is: " + encryptedText);
+                }
+                else if(usrChoice.equals("b")) 
+                {
+                    System.out.println("Text for encryption: ");
+                    String decryptedText = scrollText(input.nextLine(), -5);
+                    System.out.println("After encryption, the output is: " + decryptedText);
+                }
+                else if(usrChoice.equals("c")) 
+                { 
+                    System.out.println("Program is coming to a close...");
+                }
+                else
+                { 
+                    System.out.println("Please select again because your previous selection was invalid.");
+                }
+                if (!usrChoice.equals("c"))
+                {
+                    listOptions();
+                } 
+        } while (!usrChoice.equals("c"));
     }
-    */
+    
 
     /* Text Encryption Ends Here */
 
@@ -1282,8 +1371,18 @@ public class CourseProject1 {
                     case 'C':
                         System.out.println("\nYou are redirected to Text Encryption / Decryption Application...\n");
                         delay();
-                        //textEncryptionDescription(input);
-                        break;
+                        textEncryptionDescription(input);
+                        if(!returnMainMenu(input))
+                        {
+                            selection = 'E';
+                            break;
+                        }
+                        else
+                        {
+                            clearTheTerminal();
+                            selection = ' ';
+                            continue;
+                        }
                     case 'D':
                         System.out.println("\nYou are redirected to Tic-tac-toe HotSeat Application...\n");
                         delay();
