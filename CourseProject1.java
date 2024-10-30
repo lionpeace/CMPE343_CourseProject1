@@ -1,24 +1,15 @@
-/** CMPE343 COURSE PROJECT #1 - GROUP 6 */ 
+// COURSE PROJECT #1 - GROUP 6
 
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+
 public class CourseProject1 {
 
     /* Statistical Information About an Array Starts Here */
 
-    /**
-     * This method first sorts the array using the sort method found in the java.util.Arrays library.
-     * Then, by finding the length of the array, it checks whether this length is odd or even.
-     * If it is even, it adds the two numbers in the middle of the array and divides them by two. It sets it equal to the median variable.
-     * If it is odd, it sets the middle number of the array equal to the median.
-     * Returns the median variable
-     * @param array it's array that user will create 
-     * @return median of the array
-     */
-
-    public static double findMedian(double[] array)
+    public static double FindMedian(double[] array)
     {
         Arrays.sort(array);
         double median = 0;
@@ -38,16 +29,7 @@ public class CourseProject1 {
         return median;
     }
 
-    /**
-     * This method calculates the arithmetic mean of the given array.
-     * This method iterates through the array to sum all its elements.
-     * Then, it divides the total sum by the length of the array to find the arithmetic mean.
-     * Finally, it returns the arithmetic mean.
-     * @param array it's array that user will create
-     * @return arithmetic mean of the array
-     */
-
-    public static double findArithmeticMean(double[] array)
+    public static double FindArithmeticMean(double[] array)
     {
         double arithmeticMean = 0;
         double total = 0;
@@ -62,17 +44,7 @@ public class CourseProject1 {
         return arithmeticMean;
     }
 
-    /**
-     * This method calculates the geometric mean of the given array.
-     * This method iterates through the array, multiplying all its elements together.
-     * Then, it takes the n-th root of the total product (where n is the length of the array) to find the geometric mean.
-     * Finally, it returns the geometric mean.
-     * @param array it's array that user will create
-     * @return geometric mean of the array
-     *
-     */
-
-    public static double findGeometricMean(double[] array)
+    public static double FindGeometricMean(double[] array)
     {
         double geometricMean = 0;
         double total = 1;
@@ -87,41 +59,19 @@ public class CourseProject1 {
         return geometricMean;
     }
 
-    /**
-     * This method calculates the harmonic mean of the given array.
-     * This method uses recursion to calculate the harmonic mean. It checks if i is zero,
-     * and if so, returns the inverse of the first element of the array. Otherwise,
-     * it adds the inverse of the current element to the result of a recursive call with i decremented by one.
-     * @param array it's array that user will create
-     * @param i it represents the size of the array
-     * @return returns the harmonic mean of the array. If i is zero, it returns the inverse of the first element of the array.
-     */
-
-    public static double findHarmonicMean(double[] array, int i)
+    public static double FindHarmonicMean(double[] array, int i)
     {
         if(i == 0)
         {
             return 1 / array[0];
         }
 
-        return (1 / array[i]) + findHarmonicMean(array, i - 1);
+        return (1 / array[i]) + FindHarmonicMean(array, i - 1);
     }
 
-
-    /**
-     * This method created for organizing sub-methods of statistical information about an array operation.
-     * When this method executed terminal will be cleared with clearTheTerminal method.
-     * Then ascii art will be printed.
-     * After the necessary explanations about the operation are made to the user, the user is asked for the size of the array that will be created.
-     * Then, validation check is provided for this array size (Temporarily limited to 20).
-     * The user is asked to enter a value into the double array created with this array size, and control is provided for this double value.
-     * After the sub-methods are called, the user is shown the results of the mathematical operations he/she wanted to be calculated.
-     * @param input scanner variable from main to receive user input
-     */
-
-    public static void statInfoAboutArray(Scanner input)
+    public static void StatInfoAboutArray(Scanner input)
     {
-        clearTheTerminal();
+        ClearTheTerminal();
 
         String[] asciiArt = {
             "                                                                                                                                                                            ",
@@ -189,293 +139,76 @@ public class CourseProject1 {
             System.out.printf("\nYour number %d is %.2f.", a + 1, array[a]);
         }
 
-        double median = findMedian(array);
-        double arithmeticMean = findArithmeticMean(array);
-        double geometricMean = findGeometricMean(array);
-        double harmonicMean = sizeOfArray / findHarmonicMean(array, sizeOfArray - 1);
+        double median = FindMedian(array);
+        double arithmeticMean = FindArithmeticMean(array);
+        double geometricMean = FindGeometricMean(array);
+        double harmonicMean = sizeOfArray / FindHarmonicMean(array, sizeOfArray - 1);
 
         System.out.printf("\n\nThe median of the array is: %.2f", median);
         System.out.printf("\n\nThe arithmetic mean of the array is: %.2f", arithmeticMean);
-        System.out.printf("\n\nThe harmonic mean of the array is: %.2f", harmonicMean);
-
-        if(Double.isNaN(geometricMean))
-        {
-            System.out.printf("\n\nThe geometric mean of the array is: NaN (Not a Number). \n\nBecause:\n\n");
-            System.out.println
-            (
-                "The complexity of negative numbers in geometric mean calculations is indeed interesting. "
-                + "\nThe geometric mean is the root of the product of numbers, and when negative numbers are included, the product becomes negative."
-                + "\nWhen taking the root of negative products, the results involve complex numbers, which are not valid real numbers.\n\n"
-                + "If you receive NaN (Not a Number) when using negative numbers, it indicates that the mathematical operation is undefined or invalid."
-                + "\nHowever, in some cases where the number set includes a mix of positive and negative numbers, the geometric mean may still be calculated if the numbers are made positive (e.g., by taking the absolute value of negative numbers).\n\n"
-                + "Thus, the role and result of negative numbers in geometric mean calculations can vary depending on the combination and total count of numbers."
-                + "\nNevertheless, the presence of negative numbers generally invalidates the geometric mean calculation."
-            );
-        }
-        else
-        {
-            System.out.printf("\n\nThe geometric mean of the array is: %.2f", geometricMean);
-        }
-
+        System.out.printf("\n\nThe geometric mean of the array is: %.2f", geometricMean);
+        System.out.printf("\n\nThe harmonic mean of the array is: %.2f\n\n", harmonicMean);
     }
 
     /* Statistical Information About an Array Ends Here */
 
 
     /* Matrix Operations Starts Here */
-
-    /**
-     * 
-     * @return
-     */
-
-    private static int getValidIntegerInput() {
+    
+    // Satır ve sütun boyutları positive integer olmalı. Kullanıcıdan dimension alırken bu kontrolü yapması için metod:
+    private static int getValidIntegerInput(String text) {
         Scanner scanner = new Scanner(System.in);
         int input = -1; 
         while (true) {
-            System.out.print("(Please enter a positive integer): ");
+            System.out.print("(positive integer): ");
             if (scanner.hasNextInt()) {
                 input = scanner.nextInt();
                 if (input > 0) {
                     break;
                 } else {
-                    System.out.println("Invalid input. Please enter a positive integer.");
+                    ClearTheTerminal();
+                    System.out.println("Error!! Number of "+ text +" must be bigger than zero. Please re-enter "+text+".");
                 }
             } else {
-                System.out.println("Invalid input. Please enter a positive integer.");
+                ClearTheTerminal();
+                System.out.println("Error!! Number of "+ text +" must be an integer and a numeric value. Please re-enter "+text+".");
                 scanner.next(); 
             }
         }
         return input;
     }
 
-    /**
-     * 
-     * @return
-     */
-
-    private static double getValidDoubleInput() {
+    // Matrix elementleri double değer veya numeric bir değer olmalı. Bu kontrolü sağlaması için metod:
+    private static double getValidDoubleInput(int i, int j) {
         Scanner scanner = new Scanner(System.in);
         while (!scanner.hasNextDouble()) {
-            System.out.println("Invalid input. Please enter a numeric value (Use comma for double values).");
+            ClearTheTerminal();
+            System.out.println("Error!! Input must be a numeric value (use comma for double values).");
+            Delay();
+            System.out.println("\nPlease re-enter the value for element ["+i+"]["+j+"]:");
             scanner.next();
         }
         return scanner.nextDouble();
     }
 
-    /**
-     * 
-     * @param rows
-     * @param columns
-     * @return
-     */
-
-    private static double[][] getMatrixInputforSquareMatrix(int rows, int columns) {
-        clearTheTerminal();
+    // Rows, columns değerlerini parametre olarak alır. Ardından matris elementlerini getValidDoubleInput metodunu çağırarak alır.
+    private static double[][] getMatrixElements(int rows, int columns) {
 
         double[][] matrix = new double[rows][columns];
-        System.out.println("Enter matrix elements:");
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                System.out.print("Enter element for [" + i + "][" + j + "]: " );
-                matrix[i][j] = getValidDoubleInput();
+                System.out.println("Enter element for [" + i + "][" + j + "]:");
+                matrix[i][j] = getValidDoubleInput(i, j);
             }
         }
         return matrix;
     }
 
-    /**
-     * 
-     * @return
-     */
-
-    private static double[][] getMatrixInput() {
-        clearTheTerminal();
-        System.out.print("Enter number of rows ");
-        int rows = getValidIntegerInput();
-        System.out.print("Enter number of columns ");
-        int columns = getValidIntegerInput();
-
-        double[][] matrix = new double[rows][columns];
-        System.out.println("Enter matrix elements:");
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                System.out.println("Enter element for [" + i + "][" + j + "]");
-                matrix[i][j] = getValidDoubleInput();
-            }
-        }
-        return matrix;
-    }
-
-    /**
-     * 
-     * @return
-     */
-
-    private static double[][] getSquareMatrixInput() {
-
-        double[][] matrix;
-        while(true){
-            System.out.print("Enter number of rows ");
-            int rows = getValidIntegerInput();
-            System.out.print("Enter number of columns ");
-            int columns = getValidIntegerInput();
-            if (rows == columns){
-                matrix = getMatrixInputforSquareMatrix(rows, columns);
-                return matrix;
-            }
-            else{
-                clearTheTerminal();
-                System.out.println("rows and columns should be same in order matrix to be square matrix. Please re-enter sizes");
-            }
-        }
-        
-    }
-
-    /**
-     * 
-     * @param matrix
-     * @return
-     */
-
-    private static double[][] transpose(double[][] matrix) {
-        int rows = matrix.length;
-        int columns = matrix[0].length;
-        double[][] transposed = new double[columns][rows];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                transposed[j][i] = matrix[i][j];
-            }
-        }
-        return transposed;
-    }
-
-    /**
-     * 
-     * @param matrix
-     * @return
-     */
-
+    // Singularity kontrolü yapar (determinant == 0) (Inverse işlemi için gerekli)
     private static boolean isSingular(double[][] matrix) {
         double determinant = calculateDeterminant(matrix);
         return determinant == 0;
     }
-
-    /**
-     * 
-     * @param matrix1
-     * @param matrix2
-     * @return
-     */
-
-    private static boolean canMultiply(double[][] matrix1, double[][] matrix2) {
-        return matrix1[0].length == matrix2.length;
-    }
-
-    /**
-     * 
-     * @param matrix
-     * @return
-     */
-
-    private static double calculateDeterminant(double[][] matrix) {
-        int n = matrix.length;
-
-        if (n == 2) {
-            return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
-        }
-
-        double det = 0;
-        for (int i = 0; i < n; i++) {
-            det += Math.pow(-1, i) * matrix[0][i] * calculateDeterminant(minor(matrix, 0, i));
-        }
-        return det;
-    }
-    
-    /**
-     * 
-     * @param matrix
-     * @return
-     */
-
-    private static double[][] calculateInverse(double[][] matrix) {
-        int rows = matrix.length;
-        int columns = matrix[0].length;
-
-        double[][] inverseMatrix = new double[columns][rows];
-
-        double det = calculateDeterminant(matrix);
-        //double[][] adj = matrixAdjoint(matrix);
-        double scalar = (1/det);
-        //inverseMatrix = scalarMultiplication(adj, scalar);
-
-        return inverseMatrix;
-    }
-
-    /**
-     * 
-     * @param matrix1
-     * @param matrix2
-     * @return
-     */
-
-    private static double[][] elementWiseMultiplication(double[][] matrix1, double[][] matrix2) {
-        int rows = matrix1.length;
-        int cols = matrix1[0].length;
-        double[][] result = new double[rows][cols];
-        
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                result[i][j] = matrix1[i][j] * matrix2[i][j];
-            }
-        }
-        return result;
-    }
-
-    /**
-     * 
-     * @param matrix1
-     * @param matrix2
-     * @return
-     */
-
-    private static double[][] multiplyMatrices(double[][] matrix1, double[][] matrix2) {
-        int rows1 = matrix1.length;
-        int cols1 = matrix1[0].length;
-        int cols2 = matrix2[0].length;
-        double[][] result = new double[rows1][cols2];
-
-        for (int i = 0; i < rows1; i++) {
-            for (int j = 0; j < cols2; j++) {
-                for (int k = 0; k < cols1; k++) {
-                    result[i][j] += matrix1[i][k] * matrix2[k][j];
-                }
-            }
-        }
-        return result;
-    }
-
-    /**
-     * 
-     * @param matrix
-     */
-
-    public static void printMatrix(double[][] matrix) {
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[0].length; j++) {
-                System.out.print(matrix[i][j] + "\t");
-            }
-            System.out.println();
-        }
-    }
-
-    /**
-     * 
-     * @param matrix
-     * @param row
-     * @param column
-     * @return
-     */
 
     private static double[][] minor(double[][] matrix, int row, int column) {
         int n = matrix.length;
@@ -496,38 +229,144 @@ public class CourseProject1 {
         return minor;
     }
 
-    /**
-     * 
-     * @param matrix
-     * @param row
-     * @param col
-     * @return
-     */
-
     public static double calculateCofactor(double[][] matrix, int row, int col) {
         double signCheck = Math.pow(-1, (row+col));
         return signCheck * calculateDeterminant( minor(matrix, row, col) );
-
     }
 
-    /**
-     * 
-     */
+    public static void printMatrix(double[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                System.out.printf("%.2f ", matrix[i][j]);
+            }
+            System.out.println();
+        }
+    }
 
     private static void pressAnyKeyToContinue() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nPress enter to continue...");
         scanner.nextLine();
-        clearTheTerminal();
+        ClearTheTerminal();
     }
-   
-    /**
-     * 
-     * @param var0
-     */
+
+
+    // Main operations:
+    private static double[][] transpose(double[][] matrix) {
+        int rows = matrix.length;
+        int columns = matrix[0].length;
+        double[][] transposed = new double[columns][rows];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                transposed[j][i] = matrix[i][j];
+            }
+        }
+        return transposed;
+    }
+
+    private static double calculateDeterminant(double[][] matrix) {
+        int n = matrix.length;
+
+        if (n == 2) {
+            return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+        }
+
+        double det = 0;
+        for (int i = 0; i < n; i++) {
+            det += Math.pow(-1, i) * matrix[0][i] * calculateDeterminant(minor(matrix, 0, i));
+        }
+        return det;
+    }
     
+    private static double[][] calculateInverse(double[][] matrix) {
+        int rows = matrix.length;
+        int columns = matrix[0].length;
+
+        double[][] inverseMatrix = new double[columns][rows];
+
+        double det = calculateDeterminant(matrix);
+        //double[][] adj = matrixAdjoint(matrix);
+        double scalar = (1/det);
+        //inverseMatrix = scalarMultiplication(adj, scalar);
+
+        return inverseMatrix;
+    }
+
+    private static double[][] multiplyMatrices() {
+
+        while(true){
+            System.out.println("Please enter dimensions for the first matrix.");
+            System.out.print("Enter number of rows for the first matrix ");
+            int rows1 = getValidIntegerInput("rows");
+
+            System.out.print("Enter number of columns for the first matrix ");
+            int cols1 = getValidIntegerInput("columns");
+
+            ClearTheTerminal();
+
+            System.out.println("Dimensions for the first matrix is ("+rows1+"x"+cols1+"). Please enter dimensions for the second matrix. ");
+            System.out.print("Enter number of rows for the second matrix ");
+            int rows2 = getValidIntegerInput("rows");
+
+            System.out.print("Enter number of columns for the second matrix ");
+            int cols2 = getValidIntegerInput("columns");
+
+            ClearTheTerminal();
+            if (cols1 == rows2){
+                double[][] matrix1 = new double[rows1][cols1];
+                System.out.println("Enter elements for the first matrix :");
+                for (int i = 0; i < rows1; i++) {
+                    for (int j = 0; j < cols1; j++) {
+                        System.out.println("Enter element for [" + i + "][" + j + "]");
+                        matrix1[i][j] = getValidDoubleInput(i,j);
+                    }
+                }
+
+                ClearTheTerminal();
+                double[][] matrix2 = new double[rows2][cols2];
+                System.out.println("Enter elements for the second matrix :");
+                for (int i = 0; i < rows2; i++) {
+                    for (int j = 0; j < cols2; j++) {
+                        System.out.println("Enter element for [" + i + "][" + j + "]");
+                        matrix2[i][j] = getValidDoubleInput(i,j);
+                    }
+                }
+                
+                double[][] result = new double[rows1][cols2];
+        
+                for (int i = 0; i < rows1; i++) {
+                    for (int j = 0; j < cols2; j++) {
+                        for (int k = 0; k < cols1; k++) {
+                            result[i][j] += matrix1[i][k] * matrix2[k][j];
+                        }
+                    }
+                }
+                return result;
+
+            } else{
+                ClearTheTerminal();
+                System.out.println("Matrix dimensions do not match for multiplication.\nColumn size of the first matrix and row size of the second matrix should be same. \n");
+            }
+        }
+    }
+
+    private static double[][] elementWiseMultiplication(double[][] matrix1, double[][] matrix2) {
+        int rows = matrix1.length;
+        int cols = matrix1[0].length;
+        double[][] result = new double[rows][cols];
+        
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result[i][j] = matrix1[i][j] * matrix2[i][j];
+            }
+        }
+        return result;
+    }
+
+        
     public static void matrixOperations(Scanner var0) {
-        clearTheTerminal();
+
+        ClearTheTerminal();
         String[] var1 = new String[]{
                 "_  _ ____ ___ ____ _ _  _    ____ ___  ____ ____ ____ ___ _ ____ _  _ ____ ",
                 "|\\/| |__|  |  |__/ |  \\/     |  | |__] |___ |__/ |__|  |  | |  | |\\ | [__  ",
@@ -543,7 +382,8 @@ public class CourseProject1 {
         while (true) {
             int operationSelection = 0;
 
-            System.out.println("1 - Transpose");
+            // Seçim Menüsü
+            System.out.println("\n1 - Transpose");
             System.out.println("2 - Determinant");
             System.out.println("3 - Inverse");
             System.out.println("4 - Matrix Multiplication");
@@ -554,80 +394,180 @@ public class CourseProject1 {
             try {
                 operationSelection = var0.nextInt();
             } catch (InputMismatchException e) {
+                ClearTheTerminal();
                 System.out.println("Error! Please enter a valid number (1-6).");
-                var0.next();
+                var0.next(); 
                 continue;
             }
 
-            clearTheTerminal();
+            ClearTheTerminal();
 
             double[][] matrix;
             double[][] matrix1;
             double[][] matrix2;
             double[][] result;
+            int rows;
+            int columns;
 
             switch (operationSelection) {
                 case 1:
                     // TRANSPOSE
 
-                    matrix = getMatrixInput();
-                    double[][] transposed = transpose(matrix);
-                    clearTheTerminal();
-                    System.out.println("Transpose of the given matrix is ... \n");
-                    printMatrix(transposed);
+                    System.out.println("The transpose of a matrix is formed by swapping its rows and columns, turning row indices into column indices and vice versa.");
+                    System.out.println("First, we will ask for the dimensions of the matrix you want to transpose. Then, we will request the elements of the matrix with the dimensions you provided.\n\n");
 
+                    Delay();
+
+                    System.out.print("Enter number of rows ");
+                    rows = getValidIntegerInput("rows");
+                    System.out.print("Enter number of columns ");
+                    columns = getValidIntegerInput("columns");
+
+                    ClearTheTerminal();
+                    System.out.print("The dimensions of the matrix are ("+rows+" x "+ columns +").\n\n");
+
+                    matrix = getMatrixElements(rows, columns);
+                    double[][] transposed = transpose(matrix);
+
+                    ClearTheTerminal();
+
+                    System.out.println("Transpose of the given matrix is ... \n");
+                    Delay();
+
+                    printMatrix(transposed);
                     pressAnyKeyToContinue();
                 
                     break;
                 case 2:
                     // DETERMINANT
 
-                    matrix = getSquareMatrixInput();
-                    if (matrix != null) {
-                        double determinant = calculateDeterminant(matrix);
-                        System.out.println("Determinant: " + determinant);
+                    double determinant;
+
+                    System.out.println("The determinant is a scalar value that is a function of a square matrix, providing important information about the matrix, such as whether it is invertible.");
+                    System.out.println("First, we will ask for the dimensions of the matrix you want to transpose. Then, we will request the elements of the matrix with the dimensions you provided.\n\n");
+                    System.out.println("Note that, a square matrix is a matrix that has the same number of rows and columns, meaning it has the dimensions nxn for some integer n.\n\n");
+
+                    Delay();
+
+                    while(true){
+                        System.out.print("Enter number of rows ");
+                        rows = getValidIntegerInput("rows");
+                        System.out.print("Enter number of columns ");
+                        columns = getValidIntegerInput("columns");
+                        if (rows == columns){
+                            ClearTheTerminal();
+                            System.out.print("The dimensions of the matrix are ("+rows+" x "+ columns +").\n\n");
+                            matrix = getMatrixElements(rows, columns);
+                            determinant = calculateDeterminant(matrix);
+                            break;
+                        }
+                        else{
+                            ClearTheTerminal();
+                            System.out.println("Error!! Number of rows and columns should be same in order matrix to be square matrix. Please re-enter sizes.\n");
+                        }
                     }
 
+                    ClearTheTerminal();
+
+                    System.out.println("Determinant of the given matrix is ... \n");
+                    Delay();
+
+                    System.out.println(determinant);
                     pressAnyKeyToContinue();
 
                     break;
                 case 3:
                     // INVERSE
 
-                    matrix = getSquareMatrixInput();
-                    if (matrix != null && !isSingular(matrix)) {
-                        double[][] inverse = calculateInverse(matrix);
-                        printMatrix(inverse);
+                    double[][] inverse;
+                    while(true){
+                        System.out.print("Enter number of rows ");
+                        rows = getValidIntegerInput("rows");
+                        System.out.print("Enter number of columns ");
+                        columns = getValidIntegerInput("columns");
+                        if (rows == columns){
+                            matrix = getMatrixElements(rows, columns);
+                            inverse = calculateInverse(matrix);
+                            break;
+                        }
+                        else{
+                            ClearTheTerminal();
+                            System.out.println("rows and columns should be same in order matrix to be square matrix. Please re-enter sizes");
+                        }
                     }
+                    ClearTheTerminal();
 
+                    System.out.println("Inverse of the given matrix is ... \n");
+                    Delay();
+
+                    printMatrix(inverse);
                     pressAnyKeyToContinue();
 
                     break;
                 case 4:
                     // MULTIPLICATION
+                
+                    System.out.println("Matrix multiplication is an operation that takes two matrices and produces a new matrix by multiplying the rows of the first matrix by the columns of the second matrix,\nfollowing specific rules of alignment.");
+                    System.out.println("First, we will ask for the dimensions of each matrix, and then we will request the elements within each matrix.\n");
+                    System.out.println("Note that, for matrix multiplication to be valid, the number of columns in the first matrix must equal the number of rows in the second matrix.\n\n");
+                    Delay();
 
-                    matrix1 = getMatrixInput();
-                    matrix2 = getMatrixInput();
-                    if (canMultiply(matrix1, matrix2)) {
-                        result = multiplyMatrices(matrix1, matrix2);
-                        printMatrix(result);
-                    } else {
-                        System.out.println("Matrix dimensions do not match for multiplication.");
-                    }
+                    result = multiplyMatrices();
 
+                    ClearTheTerminal();
+
+                    System.out.println("Performing multiplication. Resulting matrix is ... \n");
+                    Delay();
+
+                    printMatrix(result);
                     pressAnyKeyToContinue();
 
                     break;
                 case 5:
+                    // ELEMENT-WISE MULTIPLICATION
 
-                    matrix1 = getSquareMatrixInput();
-                    matrix2 = getSquareMatrixInput();
-                    
-                    result = elementWiseMultiplication(matrix1, matrix2);
-                    System.out.println("Performing element-wise multiplication...");
+                    System.out.println("Element-wise multiplication is the operation of multiplying each element of two matrices or arrays of the same size by the corresponding element in the other.");
+                    System.out.println("First, we will ask for the dimensions of each matrix, and then we will request the elements within each matrix.\n\n");
+                    Delay();
+                    int rows1;
+                    int rows2;
+                    int cols1;
+                    int cols2;
+
+                    while(true){
+                        System.out.print("Enter number of rows for the first matrix\n");
+                        rows1 = getValidIntegerInput("rows");
+                        System.out.print("Enter number of columns for the second matrix:\n");
+                        cols1 = getValidIntegerInput("columns");
+    
+                        System.out.print("\nEnter number of rows for the second matrix\n");
+                        rows2 = getValidIntegerInput("rows");
+                        System.out.print("Enter number of rows for the second matrix\n");
+                        cols2 = getValidIntegerInput("columns");
+
+                        ClearTheTerminal();
+
+                        if(rows1 == rows2 && cols1 == cols2){
+                            System.out.print("Dimensions for both matrices are ("+rows1+" x "+ cols1 +")\n");
+                            System.out.println("Please enter corresponding elements for the first matrix.\n\n");
+                            matrix1 = getMatrixElements(rows1, cols1);
+
+                            ClearTheTerminal();
+                            System.out.println("Please enter corresponding elements for the second matrix.\n\n");
+                            matrix2 = getMatrixElements(rows2, cols2);
+                            result = elementWiseMultiplication(matrix1, matrix2);
+                            break;
+                        } else{
+                            ClearTheTerminal();
+                            System.out.println("Matrices must have the same size to operate element wise multiplication.\nPlease re-enter dimensions.\n");
+                        }
+                    }
+                
+                    ClearTheTerminal();
+                    System.out.println("Performing element-wise multiplication...\n\n");
+                    Delay();
+
                     printMatrix(result);
-                   
-
                     pressAnyKeyToContinue();
 
                     break;
@@ -641,34 +581,23 @@ public class CourseProject1 {
         }
     }
 
-    /* Matrix Operations Ends Here */
+
 
     
-    /* Text Encryption Starts Here */
+    /* Matrix Operations Ends Here */
 
-    /*
-    public static void textEncryptionDescription(Scanner input)
+
+    public static void TextEncryptionDescription(Scanner input)
     {
-        clearTheTerminal();
+        ClearTheTerminal();
         
         System.out.println("Welcome to Text Encrytion");
     }
-    */
 
-    /* Text Encryption Ends Here */
 
     /* Tic Tac Toe Starts Here */
 
-    /**
-     * Checks the tic-tac-toe board matrix for a winning condition both vertically and horizontally.
-     * Iterates through the columns and rows of the given matrix to calculate the sum of elements
-     * vertically and horizontally. If the sum matches a specific winning condition (12 or 15),
-     * returns true. Otherwise, returns false.
-     * @param matrix it's an integer matrix created for the tic-tac-toe game
-     * @return returns boolean value after checking matrix vertically and horizontally
-     */
-
-    public static boolean checkVerticallyAndHorizontally(int[][] matrix)
+    public static boolean CheckVerticallyAndHorizontally(int[][] matrix)
     {
         for (int col = 0; col < 3; col++) 
         {
@@ -689,16 +618,7 @@ public class CourseProject1 {
         return false;
     }
 
-    /**
-     * Checks the tic-tac-toe board matrix for a winning condition diagonally.
-     * Iterates through the diagonals of the given matrix to calculate the sum of elements.
-     * If the sum matches a specific winning condition (12 or 15), returns true. 
-     * Otherwise, returns false.
-     * @param matrix it's an integer matrix created for the tic-tac-toe game
-     * @return returns boolean value after checking matrix diagonally
-     */
-    
-    public static boolean checkDiagonally(int[][] matrix)
+    public static boolean CheckDiagonally(int[][] matrix)
     {
         int diagonalOne = 0;
         int diagonalTwo = 0;
@@ -721,25 +641,16 @@ public class CourseProject1 {
         return false;
     }
 
-    /**
-     * If returns true, one of the player won the game.
-     * @param matrix it's an integer matrix created for the tictactoe game
-     * @return returns boolean value after checking matrix vertically and horizontally and diagonally with if condition and methods
-     */
-
-    public static boolean checkForWin(int[][] matrix)
+    public static boolean CheckForWin(int[][] matrix)
     {
-        return checkVerticallyAndHorizontally(matrix) || checkDiagonally(matrix);
+        if(CheckVerticallyAndHorizontally(matrix) || CheckDiagonally(matrix))
+        {
+            return true;
+        }
+        return false;
     }
 
-    /**
-     * Prints the tic-tac-toe board matrix to the console.
-     * Iterates through the given matrix and prints different symbols based on the cell value:
-     * '.' for 0, 'X' for 4, and 'O' for 5.
-     * @param matrix it's an integer matrix created for the tic-tac-toe game
-     */
-
-    public static void printMatrix(int[][] matrix)
+    public static void PrintMatrix(int[][] matrix)
     {
         for(int i = 0; i < 3; i++)
         {
@@ -764,18 +675,7 @@ public class CourseProject1 {
         System.out.print("\n\n");
     }
 
-    /**
-     * Fills the tic-tac-toe board matrix at the specified position for a given player.
-     * Checks the specified position in the matrix to see if it is empty (0). If empty, 
-     * fills it with the player's value (4 or 5) and returns true. If the position is not 
-     * empty, prints an error message and returns false.
-     * @param matrix it's an integer matrix created for the tic-tac-toe game
-     * @param position it's the position where the user wants to make a move (1-9)
-     * @param player it's the integer variable representing the player who will make the move (4 or 5)
-     * @return returns a boolean value indicating whether the move was successful
-     */
-
-    public static boolean fillTheMatrix(int[][] matrix, int position, int player) {
+    public static boolean FillTheMatrix(int[][] matrix, int position, int player) {
         switch (position) {
             case 1:
                 if (matrix[0][0] == 0) {
@@ -839,26 +739,9 @@ public class CourseProject1 {
         System.out.println("The position is not empty. Please choose another position!");
         return false;
     }
-
-    /**
-     * LOGIC OF OUR TICTACTOE:
-     * <ul>
-     * <li> The player X represents integer 4. And player O represents integer 5.
-     * <li> We wanted to mathematically calculate the winning control of the game by filling the 3x3 matrix we created with 0s.
-     * <li> If you place the values ​​4 and 5 in an integer 3x3 matrix, in the checks made for tictactoe (which is done by adding the horizontal, vertical or diagonal elements); 
-     * <li> if a player has won, you will not find any other value than 12 for X (i.e. 4) and 15 for O (i.e. 5).
-     * <li> This game was created using this logic.
-     * </ul>
-     * Within the method, after the game is presented with ASCII Art, a 3x3 int matrix is ​​created, which is filled with 0s.
-     * Then, the 4 integers representing player X are defined with the variable named currentPlayer.
-     * The user is asked to select a position and the valid position check is done in the loop.
-     * If the user has chosen a valid position, the winner is checked after each loop with the checkForWin method, and if there is no winner, the currentPlayer changes (if it is 4 it becomes 5, if it is 5 it becomes 4).
-     * At each stage the matrix is ​​suppressed and if there is a winner the game ends with the winner being announced on the console.
-     * @param input scanner variable from main to receive user input
-     */
     
-    public static void ticTacToe(Scanner input) {
-        clearTheTerminal();
+    public static void TicTacToe(Scanner input) {
+        ClearTheTerminal();
     
         String[] asciiArt = {
             "                                                ",
@@ -894,7 +777,7 @@ public class CourseProject1 {
         do 
         {
             System.out.println("1 2 3\n4 5 6\n7 8 9\n");
-            printMatrix(matrix);
+            PrintMatrix(matrix);
     
             boolean validPosition = false;
             int position = 0;
@@ -907,7 +790,7 @@ public class CourseProject1 {
                 {
                     position = input.nextInt();
                     System.out.print("\n");
-                    validPosition = fillTheMatrix(matrix, position, currentPlayer);
+                    validPosition = FillTheMatrix(matrix, position, currentPlayer);
                 } 
                 catch (InputMismatchException e) 
                 {
@@ -917,7 +800,7 @@ public class CourseProject1 {
             } while (!validPosition);
     
             // Check if the game is won
-            gameWon = checkForWin(matrix);
+            gameWon = CheckForWin(matrix);
             if (gameWon) {
                 System.out.println("Player " + (currentPlayer == 4 ? "X" : "O") + " wins!");
                 break;
@@ -928,7 +811,7 @@ public class CourseProject1 {
     
         } while (!gameWon);
     
-        printMatrix(matrix);
+        PrintMatrix(matrix);
         System.out.println("Game over!");
     }
     
@@ -937,30 +820,71 @@ public class CourseProject1 {
     
     /* Common Methods Starts Here */
 
-    /**
-     * Shows the user the application's welcome message and instructions.
-     * This method calls a method using ASCII art.
-     * Shows a message explaining which applications the user can use.
-     */
-
-    public static void welcomeToApp()
+    public static void WelcomeToApp()
     {
-        asciiArt();
+        String[] asciiArt = AsciiArt(2);
+
+        for (String line : asciiArt) {
+            System.out.println(line);
+        }
 
         System.out.println("THERE ARE SOME APPLICATIONS ON THIS PROGRAM. PLEASE CHOOSE AN APPLICATION THAT YOU WANT TO USE.\n");
         System.out.println("Please just enter the letters that will be accepted (A - E). Do not use any other letter, numbers or special characters.\n");
     }
 
-    /**
-     * Prints an ASCII art to the console.
-     * 
-     * The method contains a string array with multiple lines of ASCII art and 
-     * iterates through the array to print each line to the console.
-     */
-
-    public static void asciiArt()
+    public static String[] AsciiArt(int x)
     {
-        String[] asciiArt = {
+        if(x == 1)
+        {
+            String[] asciiArt = {
+                " ____                   ____     ____                    __     __ __         __         ",
+                "/\\  _`\\     /'\\_/`\\    /\\  _`\\  /\\  _`\\               /'__`\\   /\\ \\ \\      /'__`\\       ",
+                "\\ \\ \\/\\_\\  /\\      \\   \\ \\ \\L\\ \\ \\ \\L\\_\\             /\\_\\L\\ \\  \\ \\ \\ \\    /\\_\\L\\ \\      ",
+                " \\ \\ \\_/_/ \\ \\ \\__\\ \\   \\ \\ ,__/ \\ \\  _\\L             \\/_/_\\_<_  \\ \\ \\ \\_  \\/_/_\\_<_     ",
+                "  \\ \\ \\L\\ \\ \\ \\ \\_/\\ \\   \\ \\ \\/   \\ \\ \\L\\ \\             /\\ \\L\\ \\  \\ \\__ ,__\\  /\\ \\L\\ \\    ",
+                "   \\ \\____/  \\ \\_\\\\ \\_\\   \\ \\_\\    \\ \\____/             \\ \\____/   \\/_/\\_\\_/  \\ \\____/    ",
+                "    \\/___/    \\/_/ \\/_/    \\/_/     \\/___/               \\/___/       \\/_/     \\/___/     ",
+                "                                                                                          ",
+                " ____                                            __                   __ __         _     ",
+                "/\\  _`\\                  __                     /\\ \\__               _\\ \\ \\__    /' \\    ",
+                "\\ \\ \\L\\ \\ _ __    ___   /\\_\\       __     ___   \\ \\ ,_\\             /\\__  _  _\\  /\\_, \\   ",
+                " \\ \\ ,__/\\`'__\\ / __`\\ \\/\\ \\    /'__`\\  /'___\\  \\ \\ \\/             \\/_L\\ \\ \\L_ \\/\\ \\  ",
+                "  \\ \\ \\/ \\ \\ \\/ /\\ \\L\\ \\ \\ \\ \\  /\\  __/ /\\ \\__/   \\ \\ \\_              /\\_   _  _\\   \\ \\ \\ ",
+                "   \\ \\_\\  \\ \\_\\ \\ \\____/ _\\ \\ \\ \\ \\____\\ \\____\\   \\ \\__\\             \\/_/\\_\\_\\/    \\ \\_\\ ",
+                "    \\/_/   \\/_/  \\/___/ /\\ \\_\\ \\ \\/____/ \\/____/    \\/__/                \\/_//_/      \\/_/ ",
+                "                        \\ \\____/                                                           ",
+                "                         \\/___/                                                            ",
+
+                
+            "    _                                          ___                 _            _  _                       _  _   _                _                _                  __  _     __  ",
+            "   /_\\    ___  _  _   _ __    __ _   _ _      / __|  __ _   __ _  | |  __ _    | || |  ___   _ __   _  _  (_)(_) | |__  ___  ___  | |  ___   _ _   | |  ___   _ _     / / | |    \\ \\ ",
+            "  / _ \\  (_-< | || | | '  \\  / _` | | ' \\    | (__  / _` | / _` | | | / _` |   | __ | / -_) | '_ \\ | || | | || | | / / (_-< / -_) | | / -_) | ' \\  | | / -_) | '_|   | |  | |__   | |",
+            " /_/ \\_\\ /__/  \\_,_| |_|_|_| \\__,_| |_|_||_|  \\___| \\__,_| \\__, | |_| \\__,_|   |_||_| \\___| | .__/  \\_, | \\_,_| |_/\\_\\ /__/ \\___| |_| \\___| |_||_| |_| \\___| |_|     | |  |____|  | |",
+            " | _ )  __ _   _ _  (_)  ___    / __|  __ _   _ _       /_\\|___/__ | |  __ _   _ _          |_|     |__/                                                              \\_\\        /_/ ",
+            " | _ \\ / _` | | '_| | | (_-<   | (__  / _` | | ' \\     / _ \\  (_-< | | / _` | | ' \\                                                                                                 ",
+            " |___/ \\__,_| |_|   |_| /__/    \\___| \\__,_| |_||_|   /_/ \\_\\ /__/ |_| \\__,_| |_||_|                                                                                                 ",
+            " | __| (_)  __ _   ___   _ _     |   \\   ___   _ __   (_)  _ _                                                                                                                        ",
+            " | _|  | | / _` | / -_) | ' \\    | |) | / -_) | '  \\  | | | '_|                                                                                                                       ",
+            " |_| _ |_| \\__, | \\___| |_||_|   |___/__\\___| |_|_|_| |_| |_|              ___          _          _                                                                                 ",
+            " | || |  __|___/ |_  (_)  __   ___    \\ \\ / /  __ _   _ _   ___   _ _     | _ )  _  _  | |  _  _  | |_                                                                                ",
+            " | __ | / _` | |  _| | | / _| / -_)    \\ V /  / _` | | '_| / -_) | ' \\    | _ \\ | || | | | | || | |  _|                                                                              ",
+            " |_||_| \\__,_|  \\__| |_| \\__| \\___|  __ |_|   \\__,_|_|_|   \\___| |_||_|   |___/  \\_,_| |_|  \\_,_|  \\__|_         _            _                                                       ",
+            " |  \\/  |  _  _   ___ | |_   __ _   / _|  __ _     / _ \\   __ _   _  _   ___ | |_    __ _   _ _     | __|  _ _  | |__  _  _  | |_                                                     ",
+            " | |\\/| | | || | (_-< |  _| / _` | |  _| / _` |   | (_) | / _` | | || | |_ / | ' \\  / _` | | ' \\    | _|  | '_| | / / | || | |  _|                                                    ",
+            " |_|__|_|  \\_,_| /__/  \\__| \\__,_|_|_|   \\__,_|    \\___/  \\__, |  \\_,_| /__| |_||_| \\__,_| |_||_|   |___| |_|   |_/\\_\\ \\_,_|  \\__|                                                    ",
+            " |_  / (_)  ___  __ _   _ _     |_   _|  _  _   _ _    __ | ___/ | | (_)                                                                                                              ",
+            "  / /  | | (_-< / _` | | ' \\      | |   | || | | ' \\  / _| / -_) | | | |                                                                                                              ",
+            " /___| |_| /__/ \\__,_| |_||_|     |_|    \\_,_| |_||_| \\__| \\___| |_| |_|                                                                                                              ",
+            "                                                                                                                                                                                  ",
+            "                                                                                                                                                                                ",
+            "                                                                                                                                                                                 ",
+            };
+
+            return asciiArt;
+        }
+        else if(x == 2)
+        {
+            String[] asciiArt = {
                 "                                                                                                                                                                                  ",
                 "                                                                                                                                                                                  ",
                 "                                                                                                                                                                                  ",
@@ -1000,24 +924,21 @@ public class CourseProject1 {
             "                                                                                                                                                                                  ",
             "                                                                                                                                                                                  ",
             "                                                                                                                                                                                 ",
-        };
+            };
 
-        for (String line : asciiArt) {
-            System.out.println(line);
+            return asciiArt;
         }
+
+        else
+        {
+            String[] asciiArt = {
+                " "
+            };
+            return asciiArt;
+        } 
     }
 
-    /**
-     * Prompts the user to decide whether to return to the main menu or not.
-     * Continuously asks the user for input until a valid response ('Y' or 'N') is provided.
-     * If the user selects 'Y', the method calls the welcomeToApp() method to return to the main menu 
-     * and returns true. If the user selects 'N', the method returns false. For any other input, 
-     * an error message is displayed and the user is prompted again.
-     * @param inputMainMenu scanner variable from main to receive user input
-     * @return boolean value indicating whether the user wants to return to the main menu
-     */
-
-    public static boolean returnMainMenu(Scanner inputMainMenu)
+    public static boolean ReturnMainMenu(Scanner inputMainMenu)
     {
         char mainMenuSelection = ' ';
         
@@ -1033,7 +954,6 @@ public class CourseProject1 {
                 switch(mainMenuSelection)
                 {
                     case 'Y':
-                        welcomeToApp();
                         return true;
                     case 'N':
                         return false;
@@ -1052,15 +972,7 @@ public class CourseProject1 {
         return false; // Dummy
     }
 
-    /**
-     * Pauses the execution of the current thread for a specified duration.
-     * 
-     * This method puts the current thread to sleep for 2000 milliseconds (2 seconds).
-     * If the thread is interrupted during sleep, it catches the InterruptedException
-     * and prints the stack trace.
-     */
-
-    public static void delay()
+    public static void Delay()
     {
         try {
             Thread.sleep(2000);
@@ -1069,61 +981,33 @@ public class CourseProject1 {
         }
     }
 
-    /**
-     * Clears the terminal screen based on the operating system.
-     * 
-     * This method checks the operating system and uses the appropriate command 
-     * to clear the terminal screen. For Windows, it uses "cls", and for other 
-     * operating systems (assumed to be Unix-like), it uses "clear". If an 
-     * exception occurs during this process, the stack trace is printed.
-     */
-
-    public static void clearTheTerminal()
+    public static void ClearTheTerminal()
     {
-        try 
-        {
+        try {
             String operatingSystem = System.getProperty("os.name").toLowerCase();
 
-            if (operatingSystem.contains("win")) 
-            {
+            if (operatingSystem.contains("win")) {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             }
-            else
-            {
+            else{
                 new ProcessBuilder("clear").inheritIO().start().waitFor();
-            }
-        } 
-        catch (Exception e) 
-        {
+                }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /* Common Methods Ends Here */
 
-    /**
-     * The main method that serves as the entry point for the application.
-     * This method initializes a Scanner object for user input and presents a menu with 
-     * several application options:
-     * - A: Statistical Information About an Array
-     * - B: Matrix Operations
-     * - C: Text Encryption / Decryption
-     * - D: Tic-tac-toe HotSeat
-     * - E: Terminate (Quit)
-     * Based on the user's selection, the corresponding application is executed, and the 
-     * user is asked if they want to return to the main menu after each operation. The 
-     * application runs in a loop until the user chooses to terminate (option E).
-     * @param args the command line arguments
-     */
-
     public static void main(String[] args)
     {        
         Scanner input = new Scanner(System.in);
         char selection = ' ';
-        welcomeToApp();
 
         do 
         {
+            WelcomeToApp();
+
             System.out.println("A - Statistical Information About an Array");
             System.out.println("B - Matrix Operations");
             System.out.println("C - Text Encryption / Decryption");
@@ -1141,57 +1025,57 @@ public class CourseProject1 {
                 {
                     case 'A':
                         System.out.println("\nYou are redirected to Statistical Information About an Array Application...\n");
-                        delay();
-                        statInfoAboutArray(input);
-                        if(!returnMainMenu(input))
+                        Delay();
+                        StatInfoAboutArray(input);
+                        if(!ReturnMainMenu(input))
                         {
                             selection = 'E';
                             break;
                         }
                         else
                         {
-                            clearTheTerminal();
+                            ClearTheTerminal();
                             selection = ' ';
                             continue;
                         }
                     case 'B':
                         System.out.println("\nYou are redirected to Matrix Operations Application...\n");
-                        delay();
+                        Delay();
                         matrixOperations(input);
-                        if(!returnMainMenu(input))
+                        if(!ReturnMainMenu(input))
                         {
                             selection = 'E';
                             break;
                         }
                         else
                         {
-                            clearTheTerminal();
+                            ClearTheTerminal();
                             selection = ' ';
                             continue;
                         }
                     case 'C':
                         System.out.println("\nYou are redirected to Text Encryption / Decryption Application...\n");
-                        delay();
-                        //textEncryptionDescription(input);
+                        Delay();
+                        TextEncryptionDescription(input);
                         break;
                     case 'D':
                         System.out.println("\nYou are redirected to Tic-tac-toe HotSeat Application...\n");
-                        delay();
-                        ticTacToe(input);
-                        if(!returnMainMenu(input))
+                        Delay();
+                        TicTacToe(input);
+                        if(!ReturnMainMenu(input))
                         {
                             selection = 'E';
                             break;
                         }
                         else
                         {
-                            clearTheTerminal();
+                            ClearTheTerminal();
                             selection = ' ';
                             continue;
                         }
                     case 'E':
                         System.out.println("\nTerminating the application...");
-                        delay();
+                        Delay();
                         break;
                     default:
                         System.out.println("\nYou entered an unaccepted character. Please try again!\n");
