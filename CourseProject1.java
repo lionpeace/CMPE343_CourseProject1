@@ -620,14 +620,11 @@ public class CourseProject1 {
                             break;
                         }
                         else{
-                            clearTheTerminal();
                             System.out.println("Error!! Number of rows and columns should be same in order matrix to be square matrix. Please re-enter sizes.\n");
                         }
                     }
 
                     clearTheTerminal();
-
-
 
                     System.out.println("Determinant of the given matrix is ... \n");
                     delay();
