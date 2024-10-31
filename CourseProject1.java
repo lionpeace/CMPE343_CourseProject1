@@ -184,6 +184,8 @@ public class CourseProject1 {
             }
         }
 
+        clearTheTerminal();
+
         for(int a = 0; a < sizeOfArray; a++)
         {
             System.out.printf("\nYour number %d is %.2f.", a + 1, array[a]);
@@ -194,6 +196,7 @@ public class CourseProject1 {
         double geometricMean = findGeometricMean(array);
         double harmonicMean = sizeOfArray / findHarmonicMean(array, sizeOfArray - 1);
 
+        System.out.print("\n\nTHE RESULTS:");
         System.out.printf("\n\nThe median of the array is: %.2f", median);
         System.out.printf("\n\nThe arithmetic mean of the array is: %.2f", arithmeticMean);
         System.out.printf("\n\nThe harmonic mean of the array is: %.2f", harmonicMean);
@@ -209,12 +212,12 @@ public class CourseProject1 {
                 + "If you receive NaN (Not a Number) when using negative numbers, it indicates that the mathematical operation is undefined or invalid."
                 + "\nHowever, in some cases where the number set includes a mix of positive and negative numbers, the geometric mean may still be calculated if the numbers are made positive (e.g., by taking the absolute value of negative numbers).\n\n"
                 + "Thus, the role and result of negative numbers in geometric mean calculations can vary depending on the combination and total count of numbers."
-                + "\nNevertheless, the presence of negative numbers generally invalidates the geometric mean calculation."
+                + "\nNevertheless, the presence of negative numbers generally invalidates the geometric mean calculation.\n\n"
             );
         }
         else
         {
-            System.out.printf("\n\nThe geometric mean of the array is: %.2f", geometricMean);
+            System.out.printf("\n\nThe geometric mean of the array is: %.2f\n\n", geometricMean);
         }
 
     }
@@ -553,11 +556,6 @@ public class CourseProject1 {
             }
         }
 
-        System.out.println("First matrix: \n");
-        printMatrix(matrix1);
-        System.out.println("\nSecond matrix: \n");
-        printMatrix(matrix2);
-
         return result;
     }
 
@@ -652,25 +650,25 @@ public class CourseProject1 {
                     delay();
 
                     while(true){
-                        System.out.print("Enter number of rows ");
-                        rows = getValidIntegerInput("rows", input);
-                        System.out.print("Enter number of columns ");
-                        columns = getValidIntegerInput("columns", input);
-                        if (rows == columns){
-                            clearTheTerminal();
-                            System.out.print("The dimensions of the matrix are ("+rows+" x "+ columns +").\n\n");
-                            matrix = getMatrixElements(rows, columns, input);
-                            determinant = calculateDeterminant(matrix);
-                            break;
-                        }
-                        else{
-                            System.out.println("Error!! Number of rows and columns should be same in order matrix to be square matrix. Please re-enter sizes.\n");
-                        }
+                        System.out.print("Enter number of rows & columns ");
+                        rows = getValidIntegerInput("rows & columns", input);
+                        columns = rows;
+
+                        clearTheTerminal();
+                        System.out.print("The dimensions of the matrix are ("+rows+" x "+ columns +").\n\n");
+                        matrix = getMatrixElements(rows, columns, input);
+                        
+                        determinant = calculateDeterminant(matrix);
+                        break;    
                     }
 
                     clearTheTerminal();
 
-                    System.out.println("Determinant of the given matrix is ... \n");
+                    System.out.println("The matrix: \n");
+
+                    printMatrix(matrix);
+
+                    System.out.println("\nDeterminant of the given matrix is ... \n");
                     delay();
 
                     System.out.println(determinant);
@@ -686,34 +684,36 @@ public class CourseProject1 {
                     double[][] inverse;
 
                     while(true){
-                        System.out.print("Enter number of rows ");
-                        rows = getValidIntegerInput("rows", input);
-                        System.out.print("Enter number of columns ");
-                        columns = getValidIntegerInput("columns", input);
+                        System.out.print("Enter number of rows & columns ");
+                        rows = getValidIntegerInput("rows & columns", input);
+                        columns = rows;
+                        clearTheTerminal();
+                        System.out.print("The dimensions of the matrix are ("+rows+" x "+ columns +").\n\n");
+                        matrix = getMatrixElements(rows, columns, input);
+                        double det = calculateDeterminant(matrix);
                         clearTheTerminal();
 
-                        if (rows == columns){
-                            matrix = getMatrixElements(rows, columns, input);
-                            double det = calculateDeterminant(matrix);
-                            clearTheTerminal();
+                        if(rows==1 && matrix[0][0] == 0) 
+                        {
+                            System.out.println("The inverse does not exist for a 1x1 matrix with a value of zero.");
+                        } 
+                        else if (det != 0)
+                        {
+                            System.out.println("The matrix before the inverse: \n");
+                            printMatrix(matrix);
+                            inverse = calculateInverse(matrix ,det);
+                            
+                            System.out.println("\nThe matrix after the inverse: \n");
+                            delay();
 
-                            if(rows==1 && matrix[0][0] == 0) {
-                                System.out.println("The inverse does not exist for a 1x1 matrix with a value of zero.");
-                            } else if (det != 0){
-                                System.out.println("The matrix before the inverse: \n");
-                                printMatrix(matrix);
-                                inverse = calculateInverse(matrix ,det);
-                                System.out.println("\nThe matrix after the inverse: \n");
-                                printMatrix(inverse);
-                            } else{
-                                System.out.println("Matrix is singular, therefore not invertable (Determinant is zero).");
-                            }
-                            break;
+                            printMatrix(inverse);
+                        } 
+                        else
+                        {
+                            System.out.println("Matrix is singular, therefore not invertable (Determinant is zero).");
                         }
-                        else{
-                            clearTheTerminal();
-                            System.out.println("Number of rows and columns should be same in order matrix to be square matrix. Please re-enter sizes");
-                        }
+                        break;
+                        
                     }
                     pressAnyKeyToContinue(input);
                     break;
@@ -748,35 +748,34 @@ public class CourseProject1 {
                     int cols2;
 
                     while(true){
-                        System.out.print("Enter number of rows for the first matrix\n");
+                        System.out.print("Enter number of rows for the matrices ");
                         rows1 = getValidIntegerInput("rows", input);
-                        System.out.print("Enter number of columns for the second matrix:\n");
+                        System.out.print("Enter number of columns for the matrices ");
                         cols1 = getValidIntegerInput("columns", input);
     
-                        System.out.print("\nEnter number of rows for the second matrix\n");
-                        rows2 = getValidIntegerInput("rows", input);
-                        System.out.print("Enter number of rows for the second matrix\n");
-                        cols2 = getValidIntegerInput("columns", input);
+                        rows2 = rows1;
+                        cols2 = cols1;
 
                         clearTheTerminal();
 
-                        if(rows1 == rows2 && cols1 == cols2){
-                            System.out.print("Dimensions for both matrices are ("+rows1+" x "+ cols1 +")\n");
-                            System.out.println("Please enter corresponding elements for the first matrix.\n\n");
-                            matrix1 = getMatrixElements(rows1, cols1, input);
+                        System.out.print("Dimensions for both matrices are ("+rows1+" x "+ cols1 +")\n");
+                        System.out.println("Please enter corresponding elements for the first matrix.\n\n");
+                        matrix1 = getMatrixElements(rows1, cols1, input);
 
-                            clearTheTerminal();
-                            System.out.println("Please enter corresponding elements for the second matrix.\n\n");
-                            matrix2 = getMatrixElements(rows2, cols2, input);
-                            result = elementWiseMultiplication(matrix1, matrix2);
-                            break;
-                        } else{
-                            clearTheTerminal();
-                            System.out.println("Matrices must have the same size to operate element wise multiplication.\nPlease re-enter dimensions.\n");
-                        }
+                        clearTheTerminal();
+                        System.out.println("Please enter corresponding elements for the second matrix.\n\n");
+                        matrix2 = getMatrixElements(rows2, cols2, input);
+                        result = elementWiseMultiplication(matrix1, matrix2);
+                        break;
                     }
-                
-                    System.out.println("\n\nPerforming element-wise multiplication...");
+                    
+                    clearTheTerminal();
+                    System.out.println("\nFirst matrix: \n");
+                    printMatrix(matrix1);
+                    System.out.println("\nSecond matrix: \n");
+                    printMatrix(matrix2);
+
+                    System.out.println("\nPerforming element-wise multiplication...");
                     delay();
                     System.out.println("\nResulting Matrix: \n");
                     printMatrix(result);
@@ -808,7 +807,7 @@ public class CourseProject1 {
         System.out.println(" A - Encrypt the text");
         System.out.println(" B - Decrypt the text");
         System.out.println(" C - Finish the program");
-        System.out.print("\nYour option (option choices are not case-sensitive): ");
+        System.out.print("\nYour option (option choice is not case-sensitive): ");
     }
 
     /**
@@ -1040,7 +1039,7 @@ public class CourseProject1 {
             System.out.print("\n");
         }
 
-        System.out.print("\n\n");
+        System.out.print("\n");
     }
 
     /**
@@ -1193,7 +1192,7 @@ public class CourseProject1 {
                 } 
                 catch (InputMismatchException e) 
                 {
-                    System.out.println("Invalid input! Please enter a number between 1 and 9.");
+                    System.out.println("\nInvalid input! Please enter a number between 1 and 9.");
                     input.nextLine();
                 }
             } while (!validPosition);
@@ -1218,7 +1217,7 @@ public class CourseProject1 {
         } while (!gameWon);
     
         printMatrix(matrix);
-        System.out.print("Game over!");
+        System.out.print("Game over!\n");
     }
     
     /* Tic Tac Toe Ends Here */
@@ -1237,7 +1236,7 @@ public class CourseProject1 {
         asciiArt();
 
         System.out.println("THERE ARE SOME APPLICATIONS ON THIS PROGRAM. PLEASE CHOOSE AN APPLICATION THAT YOU WANT TO USE.\n");
-        System.out.println("Please just enter the letters that will be accepted (A - E). Do not use any other letter, numbers or special characters.\n");
+        System.out.println("Please just enter the letters that will be accepted (A - E / a - e). Do not use any other letter, numbers or special characters.\n");
     }
 
     /**
@@ -1418,7 +1417,7 @@ public class CourseProject1 {
             System.out.println("D - Tic-tac-toe HotSeat");
             System.out.println("E - Terminate (Quit)\n");
 
-            System.out.print("Please choose an application: ");
+            System.out.print("Please choose an operation (operation choice is not case-sensitive): ");
             String userInput = input.next();
 
             if (userInput.length() == 1) 
@@ -1428,7 +1427,8 @@ public class CourseProject1 {
                 switch (selection) 
                 {
                     case 'A':
-                        System.out.println("\nYou are redirected to Statistical Information About an Array Application...\n");
+                    case 'a':
+                        System.out.println("\nYou are redirected to Statistical Information About an Array Operation...\n");
                         delay();
                         statInfoAboutArray(input);
                         if(!returnMainMenu(input))
@@ -1443,7 +1443,8 @@ public class CourseProject1 {
                             continue;
                         }
                     case 'B':
-                        System.out.println("\nYou are redirected to Matrix Operations Application...\n");
+                    case 'b':
+                        System.out.println("\nYou are redirected to Matrix Operations...\n");
                         delay();
                         matrixOperations(input);
                         if(!returnMainMenu(input))
@@ -1458,7 +1459,8 @@ public class CourseProject1 {
                             continue;
                         }
                     case 'C':
-                        System.out.println("\nYou are redirected to Text Encryption / Decryption Application...\n");
+                    case 'c':
+                        System.out.println("\nYou are redirected to Text Encryption / Decryption Operation...\n");
                         delay();
                         textEncryptionDescription(input);
                         if(!returnMainMenu(input))
@@ -1473,7 +1475,8 @@ public class CourseProject1 {
                             continue;
                         }
                     case 'D':
-                        System.out.println("\nYou are redirected to Tic-tac-toe HotSeat Application...\n");
+                    case 'd':
+                        System.out.println("\nYou are redirected to Tic-tac-toe HotSeat Operation...\n");
                         delay();
                         ticTacToe(input);
                         if(!returnMainMenu(input))
@@ -1488,11 +1491,13 @@ public class CourseProject1 {
                             continue;
                         }
                     case 'E':
+                    case 'e':
                         System.out.println("\nTerminating the application...");
                         delay();
                         break;
                     default:
                         System.out.println("\nYou entered an unaccepted character. Please try again!\n");
+                        delay();
                 }
             } 
             else 
@@ -1501,7 +1506,7 @@ public class CourseProject1 {
                 selection = ' ';
             }
 
-        } while (selection != 'E');
+        } while (selection != 'E' && selection != 'e');
 
         input.close();
     }
