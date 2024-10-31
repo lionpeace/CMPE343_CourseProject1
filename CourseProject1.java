@@ -225,9 +225,10 @@ public class CourseProject1 {
     /* Matrix Operations Starts Here */
 
     /**
-     * 
-     * @param text
-     * @return
+     * Prompts the user for a positive integer input, validating the input as needed.
+     * @param text Description of the required input (e.g., "rows" or "columns").
+     * @param scanner Scanner object for reading user input.
+     * @return A positive integer input from the user.
      */
 
     private static int getValidIntegerInput(String text, Scanner scanner) {
@@ -250,10 +251,11 @@ public class CourseProject1 {
     }
 
     /**
-     * 
-     * @param i
-     * @param j
-     * @return
+     * Prompts the user for a valid pair of inputs for a matrix element and checks the input format.
+     * @param i The row index of the matrix element.
+     * @param j The column index of the matrix element.
+     * @param scanner Scanner object for reading user input.
+     * @return A valid double input from the user for the specified element.
      */
 
     private static double getValidDoubleInput(int i, int j, Scanner scanner) {
@@ -266,10 +268,11 @@ public class CourseProject1 {
     }
 
     /**
-     * 
-     * @param rows
-     * @param columns
-     * @return
+     * Collects elements from the user to populate a matrix with specified dimensions.
+     * @param rows Number of rows in the matrix.
+     * @param columns Number of columns in the matrix.
+     * @param scanner Scanner object for reading user input.
+     * @return A 2D array (matrix) filled with user-provided elements.
      */
 
     private static double[][] getMatrixElements(int rows, int columns, Scanner scanner) {
@@ -284,8 +287,9 @@ public class CourseProject1 {
     }
 
     /**
-     * 
-     * @param matrix
+     * Prints the elements of the given matrix in a formatted manner.
+     * Each element is displayed with two decimal places.
+     * @param matrix a 2D array representing the matrix to be printed.
      */
 
     public static void printMatrix(double[][] matrix) {
@@ -298,7 +302,9 @@ public class CourseProject1 {
     }
 
     /**
-     * 
+     * Waits for the user to press the Enter key before returning to the operation menu.
+     * This method is useful for pausing the program and allowing the user to read the output.
+     * @param scanner Scanner object for reading user input.
      */
 
     private static void pressAnyKeyToContinue(Scanner scanner) {
@@ -308,11 +314,13 @@ public class CourseProject1 {
     }
 
     /**
-     * 
-     * @param matrix
-     * @param row
-     * @param column
-     * @return
+     * Computes the minor of a given matrix by removing the specified row and column.
+     * The minor is a smaller matrix formed by eliminating the specified row and column
+     * from the original matrix.
+     * @param matrix The original matrix from which the minor will be calculated.
+     * @param row The row index to be removed.
+     * @param column The column index to be removed.
+     * @return A new matrix representing the minor after removing the specified row and column.
      */
 
     private static double[][] minor(double[][] matrix, int row, int column) {
@@ -336,11 +344,13 @@ public class CourseProject1 {
     }
 
     /**
-     * 
-     * @param matrix
-     * @param row
-     * @param col
-     * @return
+     * Calculates the cofactor of a specific element in the given matrix.
+     * The cofactor is calculated by multiplying the determinant of the minor matrix
+     * with a sign determined by the position of the element.
+     * @param matrix The original matrix from which the cofactor will be calculated.
+     * @param row The row index of the element for which the cofactor is to be calculated.
+     * @param col The column index of the element for which the cofactor is to be calculated.
+     * @return The cofactor value for the specified element in the matrix.
      */
 
     public static double calculateCofactor(double[][] matrix, int row, int col) {
@@ -351,9 +361,11 @@ public class CourseProject1 {
     // Transpose
 
     /**
-     * 
-     * @param matrix
-     * @return
+     * Computes the transpose of the given matrix, swapping its rows and columns.
+     * In the transposed matrix, the element at position (i, j) in the original matrix
+     * becomes the element at position (j, i).
+     * @param matrix The original matrix to be transposed.
+     * @return A new matrix representing the transposed version of the original matrix.
      */
 
     private static double[][] transpose(double[][] matrix) {
@@ -371,9 +383,13 @@ public class CourseProject1 {
     // Determinant
 
     /**
-     * 
-     * @param matrix
-     * @return
+     * Calculates the determinant of the given square matrix using recursion.
+     * The determinant is computed based on the size of the matrix:
+     * - For a 1x1 matrix, it returns the single element.
+     * - For a 2x2 matrix, it calculates the determinant using the formula: ad - bc.
+     * - For larger matrices, it uses cofactor expansion along the first row.
+     * @param matrix The square matrix for which the determinant is to be calculated.
+     * @return The determinant value of the specified matrix.
      */
 
     private static double calculateDeterminant(double[][] matrix) {
@@ -397,10 +413,14 @@ public class CourseProject1 {
     // Inverse
     
     /**
-     * 
-     * @param matrix
-     * @param det
-     * @return
+     * Calculates the inverse of a given square matrix using its determinant.
+     * The inverse of a matrix exists only if its determinant is non-zero.
+     * For a 1x1 matrix, it returns the reciprocal of the element if it's not zero.
+     * For larger matrices, it will typically require further computations 
+     * (which may include finding the cofactor matrix and dividing by the determinant).
+     * @param matrix The square matrix to be inverted.
+     * @param det The determinant of the matrix, used to determine the existence of the inverse.
+     * @return The inverse of the specified matrix, or a zero matrix if the inverse does not exist.
      */
 
     public static double[][] calculateInverse(double[][] matrix, double det) {
@@ -412,7 +432,6 @@ public class CourseProject1 {
             return inverseMatrix;
         }
         
-
         double[][] cofactorMatrix = new double[n][n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -433,11 +452,19 @@ public class CourseProject1 {
     // Matrix Multiplication
 
     /**
-     * 
-     * @return
+     * Multiplies two matrices provided by the user through the console.
+     * This method prompts the user to enter the dimensions and elements of two matrices,
+     * then calculates and returns their product if the matrices are compatible for multiplication.
+     * This method continuously prompts the user to enter the dimensions and elements
+     * of two matrices until the dimensions are compatible for multiplication.
+     * If the number of columns in the first matrix matches the number of rows in the second matrix,
+     * it proceeds to perform matrix multiplication.
+     * The resulting matrix is then returned. If the dimensions do not match, it informs the user
+     * and prompts again until valid dimensions are provided.
+     * @param input Scanner object to read user input
+     * @return A matrix representing the product of the two input matrices.
      */
 
-    
     private static double[][] multiplyMatrices(Scanner input) {
         while(true){
             System.out.println("Please enter dimensions for the first matrix.");
@@ -504,10 +531,15 @@ public class CourseProject1 {
     // Element Wise Multiplication
 
     /**
-     * 
-     * @param matrix1
-     * @param matrix2
-     * @return
+     * Performs element-wise multiplication of two matrices.
+     * This method multiplies each element of the first matrix with the corresponding element of the second matrix.
+     * This method iterates over each element in the matrices, multiplies the corresponding elements,
+     * and stores the result in a new matrix. The dimensions of the input matrices must be the same.
+     * If the dimensions do not match, the behavior is undefined.
+     * After multiplication, it prints both input matrices for reference.
+     * @param matrix1 The first matrix for element-wise multiplication.
+     * @param matrix2 The second matrix for element-wise multiplication.
+     * @return A new matrix containing the product of corresponding elements of the input matrices.
      */
 
     private static double[][] elementWiseMultiplication(double[][] matrix1, double[][] matrix2) {
@@ -530,8 +562,13 @@ public class CourseProject1 {
     }
 
     /**
-     * 
-     * @param input
+     * Manages the matrix operations menu and prompts the user for input.
+     * This method repeatedly displays a menu for various matrix operations,
+     * allowing the user to choose an operation, such as addition, subtraction,
+     * multiplication, or finding the determinant. Based on the user's choice,
+     * it calls the appropriate methods to perform the operation.
+     * The loop continues until the user decides to exit the operations menu.
+     * @param input The Scanner object used for user input.
      */
 
     public static void matrixOperations(Scanner input) {
@@ -767,12 +804,11 @@ public class CourseProject1 {
      */
 
     private static void listOptions() {
-        System.out.println("\n--- Text Encryption - Decryption ---");
-        System.out.println("Select an option :");
-        System.out.println(" a) Encrypt the text");
-        System.out.println(" b) Decrypt the text");
-        System.out.println(" c) Finish the program");
-        System.out.print("Your option : ");
+        System.out.println("\nSelect an operation:");
+        System.out.println(" A - Encrypt the text");
+        System.out.println(" B - Decrypt the text");
+        System.out.println(" C - Finish the program");
+        System.out.print("\nYour option (option choices are not case-sensitive): ");
     }
 
     /**
@@ -783,25 +819,48 @@ public class CourseProject1 {
      * The "return transformedTextResult.toString()" statement returns the characters accumulated in the "StringBuilder" object "transformedTextResult" as a String.
      */
 
-    private static String scrollText(String inpuText, int scroll) {
+    private static String scrollText(String inpuText, int scroll) 
+    {
         StringBuilder transformedTextResult = new StringBuilder();
-        for (char chr : inpuText.toCharArray()) {
-            if (Character.isLetter(chr)) {
-                int alphabetSize = 26;
-                char scrolledCh = (char) (chr + scroll);
 
-                if (Character.isUpperCase(chr)) {
-                    if (scrolledCh > 'Z') scrolledCh -= alphabetSize;
-                    else if (scrolledCh < 'A') scrolledCh += alphabetSize;
-                } else if (Character.isLowerCase(chr)) {
-                    if (scrolledCh > 'z') scrolledCh -= alphabetSize;
-                    else if (scrolledCh < 'a') scrolledCh += alphabetSize;
+        for (char chr : inpuText.toCharArray()) 
+        {
+            if (Character.isLetter(chr)) 
+            {
+                int alphabetSize = 26;
+                char scrolledCh = (char)(chr + scroll);
+
+                if (Character.isUpperCase(chr)) 
+                {
+                    if (scrolledCh > 'Z')
+                    {
+                        scrolledCh -= alphabetSize;
+                    }
+                    else if (scrolledCh < 'A') 
+                    {
+                        scrolledCh += alphabetSize;
+                    }
+                        
+                } 
+                else if (Character.isLowerCase(chr)) 
+                {
+                    if (scrolledCh > 'z')
+                    {
+                        scrolledCh -= alphabetSize;
+                    } 
+                    else if (scrolledCh < 'a')
+                    {
+                        scrolledCh += alphabetSize;
+                    }
                 }
                 transformedTextResult.append(scrolledCh);
-            } else {
+            } 
+            else 
+            {
                 transformedTextResult.append(chr);
             }
         }
+
         return transformedTextResult.toString();
     }
 
@@ -813,7 +872,7 @@ public class CourseProject1 {
      * The usrChoice variable receives input from the user and continues until it reaches one of the options "a", "b", or "c". The check is performed after usrChoice has been converted to lowercase and all leading and trailing spaces have been removed.
      * Encryption is performed when the user selects option "a". The scrollText method encrypts each letter by shifting it five units. If the user selects option "b", decryption is performed. This time, the scrollText method is called with a negative shift value of -5, resulting in decryption. When the user selects option "c", a message appears on the screen indicating that the program is about to exit, and the loop is terminated.
      * If the user enters an invalid option, a warning message is displayed. Furthermore, if the user does not select the 'c' option, listOptions() is called again, and the menu is displayed again. Thus, if the user wants to perform another operation, the options are easily accessible.
-     * @param input
+     * @param input scanner variable from main to receive user input
      */
     
     public static void textEncryptionDescription(Scanner input)
@@ -832,37 +891,45 @@ public class CourseProject1 {
                 System.out.println(line);
             }
 
-
         listOptions();
-        input.next();
+
+        if (input.hasNextLine()) 
+        {
+            input.nextLine();
+        }
+
         String usrChoice;
 
         do {
             usrChoice = input.nextLine().trim().toLowerCase();
-                if(usrChoice.equals("a")) 
-                {
-                    System.out.println("Text for encryption: ");
-                    String encryptedText = scrollText(input.nextLine(), 5);
-                    System.out.println("After encryption, the output is: " + encryptedText);
-                }
-                else if(usrChoice.equals("b")) 
-                {
-                    System.out.println("Text for encryption: ");
-                    String decryptedText = scrollText(input.nextLine(), -5);
-                    System.out.println("After encryption, the output is: " + decryptedText);
-                }
-                else if(usrChoice.equals("c")) 
-                { 
-                    System.out.println("Program is coming to a close...");
-                }
-                else
-                { 
-                    System.out.println("Please select again because your previous selection was invalid.");
-                }
-                if (!usrChoice.equals("c"))
-                {
-                    listOptions();
-                } 
+            if(usrChoice.equals("a"))
+            {
+                System.out.println("\nText for encryption: ");
+                String encryptedText = scrollText(input.nextLine(), 5);
+                System.out.println("After encryption, the output is: " + encryptedText);
+            }
+            
+            else if(usrChoice.equals("b")) 
+            {
+                System.out.println("\nText for decryption: ");
+                String decryptedText = scrollText(input.nextLine(), -5);
+                System.out.println("After decryption, the output is: " + decryptedText);
+            }
+
+            else if(usrChoice.equals("c")) 
+            { 
+                System.out.println("Program is coming to a close...");
+            }
+
+            else
+            { 
+                System.out.println("Please select again because your previous selection was invalid.");
+            }
+
+            if (!usrChoice.equals("c"))
+            {
+                listOptions();
+            }
         } while (!usrChoice.equals("c"));
     }
     
@@ -1097,6 +1164,7 @@ public class CourseProject1 {
         }
     
         int currentPlayer = 4; // Start with player X
+        int drawControl = 0;
         boolean gameWon = false;
     
         System.out.println("Select one of the empty positions 1 to 9 (empty positions are indicated by '.' ). X will start the game.\n");
@@ -1118,6 +1186,10 @@ public class CourseProject1 {
                     position = input.nextInt();
                     System.out.print("\n");
                     validPosition = fillTheMatrix(matrix, position, currentPlayer);
+                    if(validPosition)
+                    {
+                        drawControl++;
+                    }
                 } 
                 catch (InputMismatchException e) 
                 {
@@ -1128,8 +1200,15 @@ public class CourseProject1 {
     
             // Check if the game is won
             gameWon = checkForWin(matrix);
+
             if (gameWon) {
-                System.out.println("Player " + (currentPlayer == 4 ? "X" : "O") + " wins!");
+                System.out.println("Player " + (currentPlayer == 4 ? "X" : "O") + " wins!\n");
+                break;
+            }
+
+            if(!gameWon && drawControl == 9)
+            {
+                System.out.println("Draw!\n");
                 break;
             }
     
@@ -1139,7 +1218,7 @@ public class CourseProject1 {
         } while (!gameWon);
     
         printMatrix(matrix);
-        System.out.println("Game over!");
+        System.out.print("Game over!");
     }
     
     /* Tic Tac Toe Ends Here */
