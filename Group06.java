@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
  
-public class CourseProject1 {
+public class Group06 {
 
     /* Statistical Information About an Array Starts Here */
 
