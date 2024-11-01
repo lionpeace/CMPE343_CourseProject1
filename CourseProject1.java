@@ -796,6 +796,44 @@ public class CourseProject1 {
     /* Text Encryption Starts Here */
 
     /**
+     * This method was created to ask the user for a shift input.
+     * Shift input is an integer value that specifies how many units the letters will be shifted from their ASCII values.
+     * @param input scanner variable from main to receive user input
+     * @return returns the shift value entered by the user
+     */
+
+    private static int askForShift(Scanner input)
+    {
+        int shift = 0;
+        boolean validShift = false;
+
+        while (!validShift) 
+        {
+            try 
+            {
+                System.out.print("\nEnter the shift value (an integer between -26 and 26): ");
+                shift = input.nextInt();
+
+                if (shift >= -26 && shift <= 26) 
+                {
+                    validShift = true;
+                } 
+                else 
+                {
+                    System.out.println("Please enter a number between -26 and 26.");
+                }
+            } 
+            catch (InputMismatchException e) 
+            {
+                System.out.println("Invalid input. Please enter a valid integer.");
+                input.next();
+            }
+        }
+
+        return shift;
+    }
+
+    /**
      * This method was created to give a user the option to encrypt text, decrypt text or terminate a programme.
      * When this method is executed, it lists the operations that the user can perform and tells the user to select an option.
      * The ‘a’ option specifies the text encryption process, the ‘b’ option specifies the decryption process, and the ‘c’ option gives the option to terminate the programme.
@@ -897,21 +935,28 @@ public class CourseProject1 {
             input.nextLine();
         }
 
+
         String usrChoice;
 
         do {
             usrChoice = input.nextLine().trim().toLowerCase();
             if(usrChoice.equals("a"))
             {
+                int shift = askForShift(input);
+                input.nextLine();
+
                 System.out.println("\nText for encryption: ");
-                String encryptedText = scrollText(input.nextLine(), 5);
+                String encryptedText = scrollText(input.nextLine(), shift);
                 System.out.println("After encryption, the output is: " + encryptedText);
             }
             
             else if(usrChoice.equals("b")) 
             {
+                int shift = askForShift(input);
+                input.nextLine();
+
                 System.out.println("\nText for decryption: ");
-                String decryptedText = scrollText(input.nextLine(), -5);
+                String decryptedText = scrollText(input.nextLine(), (-1 * shift));
                 System.out.println("After decryption, the output is: " + decryptedText);
             }
 
@@ -1321,8 +1366,10 @@ public class CourseProject1 {
                 switch(mainMenuSelection)
                 {
                     case 'Y':
+                    case 'y':
                         return true;
                     case 'N':
+                    case 'n':
                         return false;
                     default:
                         System.out.println("\nInvalid input. Please enter a valid character (Y or N).\n");
@@ -1334,7 +1381,7 @@ public class CourseProject1 {
                 mainMenuSelection = ' ';
             }
 
-        } while(mainMenuSelection != 'Y' || mainMenuSelection == 'N');
+        } while((mainMenuSelection != 'Y' && mainMenuSelection != 'y' )|| (mainMenuSelection == 'N' && mainMenuSelection == 'n'));
 
         return false; // Dummy
     }
